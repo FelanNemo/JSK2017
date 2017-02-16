@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+		window.onload = function() {
+
+			//1. Variablen deklariere
+			var z1 = 0;
+			var z2 = 0;
+			var sum = 0;
+
+			document.getElementById('z1').value = '';
+			document.getElementById('z2').value = '';
+
+			document.getElementById('+').onclick = function(e) {
+				e.preventDefault(); //Standartfunktionen von HTML werden deaktiviert
+
+				//2. Dateneinlesen
+				z1 = document.getElementById('z1').value * 1;
+				z2 = document.getElementById('z2').value * 1;
+
+				if(z1 >= 0 && z2 >= 0){
+					//3. Datenverarbeituing
+					sum = z1 + z2;
+
+					//4. Ausgabe
+					document.getElementById('ausgabe').innerHTML = 'Die Summe ist: <span style="color:red;">' + sum;
+				} else {
+					document.getElementById('ausgabe').innerHTML = 'Keine positive Zahl';
+				}
+
+			};
+
+			document.getElementById('-').onclick = function(e) {
+				e.preventDefault(); //Standartfunktionen von HTML werden deaktiviert
+
+				//2. Dateneinlesen
+				z1 = document.getElementById('z1').value * 1;
+				z2 = document.getElementById('z2').value * 1;
+
+				if(z1 >= 0 && z2 >= 0){
+					//3. Datenverarbeituing
+					sum = z1 - z2;
+
+					//4. Ausgabe
+					document.getElementById('ausgabe').innerHTML = 'Die Summe ist: <span style="color:red;">' + sum;
+				} else {
+					document.getElementById('ausgabe').innerHTML = 'Keine positive Zahl';
+				}
+
+			};
+
+			document.getElementById('*').onclick = function(e) {
+				e.preventDefault(); //Standartfunktionen von HTML werden deaktiviert
+
+				//2. Dateneinlesen
+				z1 = document.getElementById('z1').value * 1;
+				z2 = document.getElementById('z2').value * 1;
+
+				if(z1 >= 0 && z2 >= 0){
+					//3. Datenverarbeituing
+					sum = z1 * z2;
+
+					//4. Ausgabe
+					document.getElementById('ausgabe').innerHTML = 'Die Summe ist: <span style="color:red;">' + sum;
+				} else {
+					document.getElementById('ausgabe').innerHTML = 'Keine positive Zahl';
+				}
+
+			};
+
+			document.getElementById('/').onclick = function(e) {
+				e.preventDefault(); //Standartfunktionen von HTML werden deaktiviert
+
+				//2. Dateneinlesen
+				z1 = document.getElementById('z1').value * 1;
+				z2 = document.getElementById('z2').value * 1;
+
+				if(z1 >= 0 && z2 > 0){
+					//3. Datenverarbeituing
+					sum = z1 / z2;
+
+					//4. Ausgabe
+					document.getElementById('ausgabe').innerHTML = 'Die Summe ist: <span style="color:red;">' + sum;
+				} else {
+					document.getElementById('ausgabe').innerHTML = 'Keine positive Zahl';
+				}
+
+			};
+
+	};
+	</script>
+</head>
+<body>
+	<form action="">
+		Zahl1: <input id="z1" type="text"><br>
+		Zahl1: <input id="z2" type="text"><br>
+		<button type="submit" id="+">+</button>
+		<button type="submit" id="-">-</button>
+		<button type="submit" id="*">*</button>
+		<button type="submit" id="/">/</button>
+	</form>
+	<div id="ausgabe"></div>
+</body>
+</html>

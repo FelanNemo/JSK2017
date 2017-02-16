@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+		var counter = 0; // das is eine Variable
+		
+		window.onload = function(){ //dient dazu das HTML erst geladen wird bevor JS arbeitet
+			alert('Hello Welt'); /*'' und "" ist JavaScript egal = Empfehlung die einfachen in JS nehmen da
+			die doppelten in HTML verwendet werden*/
+			console.log('Hallo Konsole'); // Auch eine Ausgabe allerdings in die Konsole
+			document.getElementById('ausgabe').innerHTML = 'HTML mit Javascript';// document.getElementById Befehl zum zugreifen von HTML Elementen
+																			//innerHTML = zum reinschreiben
+																			//innerHTML dient auch dazu HTML dazufügen
+			document.getElementById('btn').onclick = function() {
+				counter++; //Kurzform für +1
+			
+				document.getElementById('ausgabe').innerHTML = 'Es wurde <b>' + counter + '</b> geclickt';
+				document.getElementById('ausgabe').style.color = 'blue'; //style greift auf CSS zu Color ist das veränderte Attribut
+				document.getElementById('ausgabe').style.fontStyle = 'italic';
+			};
+			
+			document.getElementById('red').onclick = function() {
+				document.getElementById('farbspiel').style.color = 'red'; //style greift auf CSS zu Color ist das veränderte Attribut
+			};
+			
+			document.getElementById('blue').onclick = function() {
+				document.getElementById('farbspiel').style.color = 'blue'; //style greift auf CSS zu Color ist das veränderte Attribut
+			};
+		};		
+	</script>
+	<script src="basics.js"></script> <!-- man muss sich entscheiden ob man ein script Tag zum laden verwende
+oder zum inline coden	-->
+	<style>
+		p{ color: pink;}
+	</style>
+</head>
+<body>
+	<p style="color:red;">Hallo Welt</p>
+	
+	<p id="ausgabe"></p>
+	
+	<button id="btn">Klick mich</button>
+	
+	<p id="farbspiel">Dieser Text soll eingefärbt werden!</p>
+	<button id="red">Rot</button>
+	<button id="blue">Blau</button>
+	
+</body>
+</html>

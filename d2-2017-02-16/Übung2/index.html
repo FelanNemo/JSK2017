@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+  <script src="js.js"></script>
+  <script>
+	//Eventlistener zuweise
+  window.onload = function(){
+		var umrechnung;
+
+    _e('euro').value = '';
+		_e('usd').value = '';
+
+		_e('euro').onfocus = function(){
+			umrechnung  = starteUmrechnungEuro;
+		}
+
+		_e('usd').onfocus = function(){
+			umrechnung  = starteUmrechnungUSD;
+		}
+
+    document.getElementById('meinForm').onsubmit = function(e){umrechnung(e);};
+  };
+
+  //Funktionen
+	var starteUmrechnungEuro = function(e) {
+		e.preventDefault();
+
+    var euro, usd, kurs;
+    kurs = 1.0638;
+
+    euro = _e('euro').value;
+    euro = zahlEinlesen(euro);
+
+    if(isNaN(euro)){
+      _e('euro').className = 'error';
+      _e('usd').innerHTML = '';
+      //_e('euro').setAttribute('class','error');
+    } else {
+      usd = euro * kurs;
+      _e('usd').value = zahlAusgeben(usd);
+      _e('euro').className = '';
+    }
+  };
+
+	var starteUmrechnungUSD = function(e) {
+    e.preventDefault();
+
+    var euro, usd, kurs;
+    kurs = 1.0638;
+
+    		usd = _e('usd').value;
+    usd = zahlEinlesen(usd);
+
+
+		if(isNaN(usd)){
+			_e('usd').className = 'error';
+      _e('euro').innerHTML = '';
+		} else {
+			euro = usd / kurs;
+      _e('euro').value = zahlAusgeben(euro);
+      _e('usd').className = '';
+		}
+  };
+	</script>
+
+  <style>
+  .error{
+    background-color: red;
+    color: rgb(255,255,255);
+  }
+  </style>
+</head>
+
+<body>
+  <form action="?" id="meinForm">
+    EUR <input type="text" id="euro">
+		<button type="" id="change">Euro < > USD</button>
+    <input type="text" id="usd"> USD
+  </form>
+</body>
+</html>

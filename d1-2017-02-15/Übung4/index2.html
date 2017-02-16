@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+	window.onload = function() {
+
+		//1. Variablen deklariere
+		var age = 0;
+		var gender = 'o';
+
+		document.getElementById('sum').onclick = function() {
+
+			//2. Dateneinlesen
+			age = document.getElementById('age').value * 1;
+			gender = document.getElementById('gender').value;
+
+			console.log(age, gender);
+
+			//if(gender == 'm' || gender == 'f'){
+				if(age > 1 && age < 18 && gender == 'm'){
+						//4. Ausgabe
+					document.getElementById('ausgabe').innerHTML('Du bist ein Bub!');
+				}
+
+				if(age > 1 && age < 18 && gender == 'f'){
+					//4. Ausgabe
+					document.getElementById('ausgabe').innerHTML('Du bist ein Mädchen!');
+				}
+
+				if(age > 18 && gender == 'm'){
+					//4. Ausgabe
+					document.getElementById('ausgabe').innerHTML('Du bist ein Mann!');
+				}
+
+				if(age > 18 && gender == 'f'){
+					//4. Ausgabe
+					document.getElementById('ausgabe').innerHTML('Du bist eine Frau!');
+				}
+			//}
+
+		};
+
+};
+	</script>
+</head>
+<body>
+	<form action="">
+	Alter: <input id="age" type="text"><br>
+	Geschlecht: <input id="gender" type="text"><br>
+	<button type="button" id="sum">Submit</button>
+</form>
+
+<div id="ausgabe"> </div>
+
+</body>
+</html>

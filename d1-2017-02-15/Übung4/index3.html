@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+	window.onload = function() {
+		//1. Variablen deklariere
+		var age = 0;
+		var gender = 'o';
+
+		document.getElementById('sum').onclick = function() {
+			//2. Dateneinlesen
+			age = document.getElementById('age').value * 1;
+			gender = document.getElementById('gender').value;
+
+			console.log(age, gender);
+
+			if(gender === 'm' || gender === 'f' ){
+				document.getElementById('gender').style.backgroundColor = 'white';
+			} else{
+				document.getElementById('gender').style.backgroundColor = 'red';
+			}
+
+			if(age > 1 && age < 120 ){
+				document.getElementById('age').style.backgroundColor = 'white';
+			} else{
+				document.getElementById('age').style.backgroundColor = 'red';
+			}
+
+			if(age > 1 && age < 18 && gender == 'm'){
+				document.getElementById('ausgabe').innerHTML = 'Du bist ein Bub!';
+			}
+
+			if(age > 1 && age < 18 && gender == 'f'){
+				document.getElementById('ausgabe').innerHTML = 'Du bist ein Mädchen!';
+			}
+
+			if(age > 18 && age < 120 && gender == 'm'){
+				document.getElementById('ausgabe').innerHTML = 'Du bist ein Mann!';
+			}
+
+			if(age > 18 && age < 120 && gender == 'f'){
+				document.getElementById('ausgabe').innerHTML = 'Du bist eine Frau!';
+			}
+		};
+};
+	</script>
+</head>
+
+<body>
+	<form action="">
+	Alter (2 - 120): <input id="age" type="text"><br>
+	Geschlecht (m für männlich oder f für weiblich): <input id="gender" type="text"><br>
+	<button type="button" id="sum">Submit</button>
+</form>
+
+<div id="ausgabe"> </div>
+
+</body>
+</html>

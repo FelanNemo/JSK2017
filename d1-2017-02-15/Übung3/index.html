@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+		window.onload = function() {
+
+			//1. Variablen deklariere
+			var z1 = 0;
+			var z2 = 0;
+			var sum = 0;
+
+			document.getElementById('sum').onclick = function() {
+				//2. Dateneinlesen
+				z1 = document.getElementById('z1').value;
+				z2 = document.getElementById('z2').value;
+
+				//3. Datenverarbeituing
+				sum = z1 + z2;
+
+				//4. Ausgabe
+				document.getElementById('ausgabe').innerHTML(sum);
+
+			}
+
+	}
+	</script>
+</head>
+<body>
+	<form action="">
+		Zahl1: <input id="z1" type="text"><br>
+		Zahl1: <input id="z2" type="text"><br>
+		<button type="button" id="sum">Summe</button>
+	</form>
+	<div id="ausgabe"></divY
+</body>
+</html>

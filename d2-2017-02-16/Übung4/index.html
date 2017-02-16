@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+  <script src='js.js'></script>
+  <script>
+  //Variablen
+  var compzahl, versuche;
+
+  window.onload = function(){
+    //compzahl = rnd();
+    //console.log(compzahl);
+    //var compzahl;
+    compzahl = rndComputer();
+
+    versuche = 1;
+    console.log(versuche);
+
+    _e('myForm').onsubmit = vergleich;
+
+  }
+
+  //Funktionen
+  var vergleich = function(e){
+      e.preventDefault();
+
+      var userzahl;
+
+      userzahl = _e('userEingabe').value;
+      console.log(userzahl);
+
+
+
+      if(compzahl == userzahl){
+        _e('versuche').innerHTML = versuche;
+        _e('container').className = '';
+        _e('help').className = 'hilfe';
+      } else if(userzahl < compzahl){
+          _e('help').innerHTML = 'Ihre Zahl ist kleiner als meine.'
+          versuche++;
+        }
+        else if(userzahl > compzahl){
+          _e('help').innerHTML = 'Ihre Zahl ist größer als meine.'
+          versuche++;
+        }
+  }
+
+  var rndComputer = function(){
+    var compzahl;
+
+    compzahl = rnd();
+    console.log(compzahl);
+    return compzahl;
+  }
+
+	</script>
+  <style>
+  .versuche{
+    display: none;
+  }
+
+  .hilfe{
+    display: none;
+  }
+  </style>
+</head>
+<body>
+  <form id="myForm" action ="?">
+    Bitte geben Sie eine Zahl zw. 1 und 10 ein: <input type="text" id="userEingabe"><br>
+    <span id="container" class="versuche">Es wurden <span id="versuche"></span> benötigt</span>
+    <span id="help"><span>
+  </form>
+</body>
+</html>

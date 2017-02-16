@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+	window.onload = function() {
+		document.getElementById('age').value = '';
+		document.getElementById('gender').value = '';
+
+		//1. Variablen deklariere
+		var age, gender, ageGroup1, ageGroup2, genderM, genderF, ausgabe
+
+		//2. Dateneinlesen
+		age = document.getElementById('age').value * 1;
+		gender = document.getElementById('gender').value;
+
+		//3. Verarbeitung
+		ageGroup1 = age >= 2 && age <= 18;
+		ageGroup2 = age < 18 && age <= 120;
+		genderM = gender == 'm' || gender == 'M';
+		genderM = gender == 'w' || gender == 'W';
+
+		//check Int
+		if( parseInt(age) != age ){
+			ageGroup1 = false;
+			ageGroup2 = false;
+		}
+
+		if( (!ageGroup1 && !ageGroup2) || (!genderM && !genderF)) {
+			//Fehler
+			ausgabe = 'Es ist etwas falsch';
+			if ()
+
+		}
+
+		document.getElementById('sum').onclick = function() {
+
+			console.log(age, gender);
+
+		};
+};
+	</script>
+</head>
+
+<body>
+	<form action="">
+	Alter (2 - 120): <input id="age" type="text"><br>
+	Geschlecht (m für männlich oder f für weiblich): <input id="gender" type="text"><br>
+	<button type="button" id="sum">Submit</button>
+</form>
+
+<div id="ausgabe"> </div>
+
+</body>
+</html>
