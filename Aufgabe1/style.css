@@ -1,0 +1,27 @@
+.hidden{
+  display: none;
+}
+
+.BMIRed{
+  color: 'red';
+}
+
+.BMIOrange{
+  color: 'orange';
+}
+
+.BMIGreen{
+  color: 'green';
+}
+
+.BMIlightBlue{
+  color: 'lightblue';
+}
+
+.BMIBlue{
+  color: 'blue';
+}
+
+.BMIdarkBlue{
+  color: 'darkblue';
+}

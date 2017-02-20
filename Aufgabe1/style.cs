@@ -1,0 +1,3 @@
+.BMIcomp{
+  display: hidden;
+}
