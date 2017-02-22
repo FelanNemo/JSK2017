@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+
+// Variablen, Bedingungen
+/*
+var zahl1; // Deklaration
+zahl1 = 1; // Zuweisung, 1. Zuweisung = Initialisieren
+
+var x = 5; var y, z, a, b = 5;
+
+
+/* Typen: Ganzezahl, Kommazahlen, Text
+
+ Integer: 324 > Number
+ Float: 5.6 > Number
+ String: "abc", 'abc' > String
+ Boolean: true oder false
+
+ 100
+ NaN => Not a Number
+
+'abc' => NaN
+
+*//*
+zahl1 = '1';
+
+alert( zahl1 + 2 ); // '1' + 2 => '12'
+alert( zahl1 * 1 + 2 ); // '1' * 1 => 1 + 2 => 3
+
+alert ( true * 1 )
+
+// undefined
+var x;
+alert( x ); // undefined, false
+
+/*
+	Operatoren: + - * / %
+
+	Modulo %: Rest einer Division
+	5 % 3 => 2
+
+	Verkettungsoperator: + (PHP .)
+	'a' + 'b' => 'ab'
+
+*//*
+var ergebnis;
+ergebnis = 5 * 6;
+ergebnis = zahl1 * zahl2; // ERROR
+
+// ECMA6
+//const pi = 3.14;
+
+
+text = 'AB\'""""C';
+text = "AB''''C";
+
+*/
+
+	window.onload = function() {
+
+			document.getElementById( 'z1' ).value = '';
+			document.getElementById( 'z2' ).value = '';
+
+			document.getElementById( 'sum' ).onclick= function( e ) {
+				e.preventDefault(); // Standardfunktion aus HTML deaktivieren, Achtung Browserkompatibilität
+
+				// Summenberechnung
+
+				// 1. Variablendeklartion
+				var eingabe1, eingabe2, summe;
+
+				// 2. Daten einlesen
+				eingabe1 = document.getElementById( 'z1' ).value * 1;
+
+				console.log( eingabe1 );
+
+				eingabe2 = document.getElementById( 'z2' ).value * 1;
+
+				/*
+				&& und
+				|| oder
+				! nicht
+
+				var eingabe1OK;
+				eingabe1OK = eingabe1 > 0;
+				if ( eingabe1OK == true )
+
+				if ( eingabe = 1 )
+				if ( eingabe == 1 ) > 1, '1', true
+				if ( eingabe === 1 ) > 1
+
+				*/
+				if ( isNaN( eingabe1 ) ) {
+					alert( 'Zahl1 ist keine Zahl!');
+				}
+
+				if ( !isNaN( eingabe1 ) && isFinite( eingabe2 ) ) {
+				//if ( eingabe1 > 0 && eingabe2 > 0 ) {
+						// wenn ja/true
+						// 3. Datenverarbeitung
+						summe = eingabe1 + eingabe2;
+						// 4. Ausgabe
+						document.getElementById( 'formular' ).style.display = 'none';
+						document.getElementById( 'ausgabe' ).style.display = 'block';
+						document.getElementById( 'ergebnis' ).innerHTML = summe;
+
+				} else {
+					// nein/false
+					document.getElementById( 'formular' ).style.display = 'none';
+					document.getElementById( 'ausgabe' ).style.display = 'block';
+					document.getElementById( 'ausgabe' ).innerHTML = '!!!FEHLER!!!';
+
+
+				}
+
+
+
+
+			};
+
+
+
+	};
+	</script>
+	<style>
+	body { font-size:2em; }
+	#ausgabe { display:none; }
+	#ergebnis { font-weight:normal; color:red; }
+	</style>
+</head>
+<body>
+
+	<form action="" id="formular">
+		Zahl1: <input type="text" id="z1"><br>
+		Zahl2: <input type="text" id="z2"><br>
+		<button type="submit" id="sum">Berechne Summe</button>
+	</form>
+
+	<div id="ausgabe">Die Summe ist: <b id="ergebnis"></b></div>
+
+
+</body>
+</html>

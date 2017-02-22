@@ -1,0 +1,16 @@
+Aufgabe 1) Übungsbeispiele wiederholen
+Die Beispiele Alter/Geschlecht, EUR>USD und Zahlraten durchgehen und
+ggf. Schwierigkeiten nächstes Mal mitteilen bzw. erörtern.
+
+Aufgabe 2) BMI Rechner
+User gibt Größe (in cm) und Gewicht (in kg) ein.
+Eingabefehler werden im UI angezeigt.
+Es wird BMI berechnet (zwei Kommastellen) und ausgegeben (BMI = kg/m2)
+In der Grafik bmi_tabelle.gif (siehe Ordner/ZIP) wird dem USer mit einem X angezeigt,
+wo er sich befindet.
+
+Aufgabe 3) HTML & CSS üben/wiederholen
+Tabelle: https://www.w3schools.com/html/html_tables.asp
+Versuche einen Gestaltungsraster (zB https://media.kulturbanause.de/blog/2014/11/beitragsbild-140x140.png)
+mittels Tabellen und CSS und ohne Tabellen und CSS umzusetzen.
+Zusatz: Versuche den Raster responsive zu machen (Bildschirmbreite 320 - 1600)

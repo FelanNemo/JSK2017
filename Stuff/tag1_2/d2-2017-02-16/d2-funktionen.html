@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+
+	var y;
+	var tuwas = function( p1 ) {
+		// var ....
+		/*
+		parseInt('17') => 17
+		e.preventDefault()
+		console.log(...)
+		alert(...)
+		document.getElementById(...)
+		isNaN(...)
+		*/
+		y = 5;
+
+		var s = 'Hallo'; // lokale Variable
+
+		var y;
+
+		alert( y );
+
+		//alert( s + p1 );
+		return s + p1;
+	}
+
+	function meineFunktion() {
+		document.getElementById( 'btn' ).onclick = function() {
+			var text = tuwas( 5 );
+			alert( text );
+
+			document.getElementById( 'btn' ).innerHTML = tuwas( ' Welt!' );
+
+		};
+	}
+
+	window.onload = function() {
+
+		meineFunktion(); // Funktionsaufruf
+
+	};
+
+	var x;
+	x = 5;
+
+	y = 6;
+
+
+
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<button id="btn">Klick mich</button>
+</body>
+</html>

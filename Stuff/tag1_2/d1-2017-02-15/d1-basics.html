@@ -1,0 +1,68 @@
+<!doctype html><!-- Was ist ein DOCTYPE Switch ? -->
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="d1-basics.js"></script>
+	<script>
+		/* Javascript ist super! */
+		// Javascript ist super!
+
+		var anzahlKlicks = 0; // Variable
+
+		window.onload = function() { // erst wenn HTML geladen ist
+
+			alert( 'Hallo Welt!' );
+			console.log( 'Hallo Konsole!' );
+			document.getElementById( 'ausgabe' ).innerHTML = 'HTML mit Javascript';
+
+			document.getElementById( 'btn' ).onclick = function() {
+
+				anzahlKlicks++; // zähle eins dazu
+				console.log( 'anzahlKlicks', anzahlKlicks );
+
+				document.getElementById( 'ausgabe' ).innerHTML = anzahlKlicks + 'x <b>geklickt</b>!';
+				document.getElementById( 'ausgabe' ).style.color = 'blue';
+				document.getElementById( 'ausgabe' ).style.fontStyle = 'italic';
+
+
+			};
+
+
+			document.getElementById( 'btn-red' ).onclick = function() {
+				document.getElementById( 'ausgabe' ).style.color = 'red';
+			};
+			document.getElementById( 'btn-blue' ).onclick = function() {
+				document.getElementById( 'ausgabe' ).style.color = 'blue';
+			};
+
+		};
+
+	</script>
+	<style>
+	body { font-size:2em; }
+	/* CSS ist super! */
+	p { color:pink; }
+
+	</style>
+
+</head>
+<body>
+	<!-- HTML ist Super! -->
+	<p style="color:red;">Hallo Welt!</p>
+
+	<p id="ausgabe"></p>
+
+	<button id="btn">Klick mich</button>
+
+	<button id="btn-red">Mach Text rot</button>
+	<button id="btn-blue">Mach Text blau</button>
+
+	<!--[if IE]>WAS ist das?<![endif]-->
+	<script>
+
+
+
+	</script>
+</body>
+</html>

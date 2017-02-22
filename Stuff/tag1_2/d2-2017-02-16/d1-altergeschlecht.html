@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+	<title>Frau,Mann,Mädchen,Bub</title>
+	<meta charset="utf-8">
+	<script>
+
+window.onload = function() {
+	document.getElementById( 'feldAlter' ).value = '';
+	document.getElementById( 'feldGeschlecht' ).value = '';
+	document.getElementById( 'btnAusgabe' ).onclick = function() {
+  	// 1. Deklaration
+  	var alter, geschlecht, ageGroup1, ageGroup2, sexM, sexW, ausgabe;
+
+  	// 2. Einlesen, Initialisieren
+  	alter = document.getElementById( 'feldAlter' ).value * 1;
+  	geschlecht = document.getElementById( 'feldGeschlecht' ).value;
+
+  	// 3. Verarbeitung
+  	ageGroup1 = alter >= 2 && alter <= 18;
+  	ageGroup2 = alter > 18 && alter <= 120;
+    sexM = geschlecht == 'm' || geschlecht == 'M' || geschlecht == 'männlich';
+  	sexW = geschlecht == 'w';
+
+    // check if alter is Integer
+    if ( parseInt( alter ) != alter ) {
+      ageGroup1 = false;
+      ageGroup2 = false;
+    }
+
+  	document.getElementById( 'feldGeschlecht' ).style.background = '';
+  	document.getElementById( 'feldAlter' ).style.background = '';
+
+  	if ( ( !ageGroup1 && !ageGroup2 ) || ( !sexM && !sexW ) )  {
+  		// Fehler
+  		ausgabe = 'Es ist was falsch!';
+  		if ( !sexM && !sexW ) {
+  			document.getElementById( 'feldGeschlecht' ).style.backgroundColor = 'red';
+  		}
+  		if ( !ageGroup1 && !ageGroup2) {
+  			document.getElementById( 'feldAlter' ).style.background = 'red';
+  		}
+  	} else {
+  		// alles OK
+  		if ( ageGroup1 && sexW ) ausgabe = 'Mädchen';
+  		else if ( ageGroup1 ) ausgabe = 'Bub';
+  		else if ( sexW ) ausgabe = 'Frau';
+  		else ausgabe = 'Mann';
+  	}
+
+  	// 4. Ausgabe, Rückgabewert
+  	document.getElementById( 'ausgabeDiv' ).innerHTML = ausgabe;
+  };
+}
+
+	</script>
+	<style>
+		body, input { font-size:32px; font-family:Verdana; }
+		#ausgabeDiv { padding:20px; font-weight:bold; display:inline-block; background:#000; color:#fff; }
+	</style>
+</head>
+<body>
+	<form action="?">
+		Alter[2-120]: <input type="text" id="feldAlter"><br>
+		Geschlecht[m,w]: <input type="text" id="feldGeschlecht"><br>
+		<input type="button" value="Ausgabe" id="btnAusgabe">
+	</form>
+	<div id="ausgabeDiv" style="" class=""></div>
+</body>
+</html>

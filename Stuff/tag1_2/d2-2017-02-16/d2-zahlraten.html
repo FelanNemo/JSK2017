@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.functions.js"></script>
+	<script>
+var computerZahl, versuche;
+
+window.onload = function() {
+	_e( 'start' ).onclick = spielStarten;
+	_e( 'eingabe' ).onsubmit = checkEingabe;
+}
+
+var spielStarten = function( e ) {
+	e.preventDefault();
+	computerZahl = zufallsZahl(1,10);
+	console.log( 'Zahl', computerZahl );
+	versuche = 1;
+	_e( 'eingabe' ).style.display = 'block';
+	_e( 'start' ).style.display = 'none';
+	_e( 'ausgabe' ).innerHTML = '';
+	_e( 'feldEingabe' ).value = '';
+	_e( 'feldEingabe' ).focus();
+}
+
+var checkEingabe = function( e ) {
+	e.preventDefault();
+	var eingabe;
+	eingabe = _e( 'feldEingabe' ).value * 1;
+	if ( isNaN(eingabe) || eingabe < 1 || eingabe > 10 ) {
+		_e( 'ausgabe' ).innerHTML =  'Eingabe nicht korrekt!';
+	} else if ( eingabe == computerZahl ) {
+		_e( 'ausgabe' ).innerHTML = 'Gewonnen!<br>Anzahl Versuche: ' + versuche ;
+    _e( 'eingabe' ).style.display = 'none';
+		_e( 'start' ).style.display = 'inline';
+
+	} else {
+		if ( eingabe > computerZahl ) {
+			_e( 'ausgabe' ).innerHTML = 'gesuche Zahl ist kleiner';
+		} else {
+			_e( 'ausgabe' ).innerHTML = 'gesuche Zahl ist größer';
+		}
+		versuche++;
+		_e( 'feldEingabe' ).value = '';
+	}
+}
+
+	</script>
+	<style>
+	#eingabe { display:none; }
+	</style>
+</head>
+<body>
+
+<a href="http://www.wifi.at" id="start">Spiel starten</a>
+
+<form id="eingabe">
+	<input type="text" id="feldEingabe">
+</form>
+
+<div id="ausgabe"></div>
+
+</body>
+</html>

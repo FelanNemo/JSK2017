@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.functions.js"></script>
+	<script>
+
+// Eventlistener zuweisen --------------------------------
+	window.onload = function() {
+
+		_e( 'euro' ).value = '';
+		document.getElementById( 'meinForm' ).onsubmit = function(e) { starteUmrechnung(e); }
+
+
+	// Funktionen --------------------------------------------
+
+	var starteUmrechnung = function(e) {
+		e.preventDefault();
+
+		var euro, usd, kurs;
+		kurs = 1.0638;
+
+		euro = _e( 'euro' ).value;
+		euro = zahlEinlesen( euro );
+
+		if ( isNaN( euro ) )	{
+
+			_e( 'euro' ).className = 'error';
+			_e( 'usd' ).innerHTML = '';
+
+		} else {
+			_e( 'euro' ).className = '';
+			usd = euro * kurs;
+			_e( 'usd' ).innerHTML = zahlAusgeben( usd );
+		}
+
+	}
+}
+	</script>
+	<style>
+	.error {
+		background:red;
+		color:rgb(255,255,255);
+	}
+	</style>
+</head>
+<body>
+<form action="?" id="meinForm">
+	EUR <input type="text" id="euro"><button id="change">USD</button><span id="usd"></span>
+</form>
+</body>
+</html>

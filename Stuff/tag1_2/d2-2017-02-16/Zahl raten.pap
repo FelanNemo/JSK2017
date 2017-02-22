@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FRAME GUID="2FB25471-B62C-4EE6-BD43-F819C095ACF8" FORMAT="0000" APP_VERSION="2.2.0.8" CHECKSUM="5BEE8B1EE461EF6F">
+  <PROJECT FORMAT="1.00" NAME="Zahl raten" AUTHOR="vincenza" CREATED="2017.02.16 14:48:03" MODIFIED="2017.02.16 16:55:42">
+    <DIAGRAMS>
+      <DIAGRAM FORMAT="1.00" ID="0" NAME="Zahlraten" CREATED="2017.02.16 14:48:10" MODIFIED="2017.02.16 16:55:42">
+        <LAYOUT FORMAT="1.00" COLUMNS="1" ROWS="7">
+          <ENTRIES>
+            <ENTRY COLUMN="0" ROW="0" ANCHOR="True">
+              <FIGURE SUBTYPE="PapTitle" FORMAT="1.00" ID="0">
+                <TEXT><![CDATA[Zahlraten]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="1">
+              <FIGURE SUBTYPE="PapStart" FORMAT="1.00" ID="1">
+                <TEXT><![CDATA[Start]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="2">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="4">
+                <TEXT><![CDATA[Zufallszahl ermitteln]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="3">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="8">
+                <TEXT><![CDATA[Versuche = 1]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="4">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="6">
+                <TEXT><![CDATA[Eingabeform einblenden]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="5">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="10">
+                <TEXT><![CDATA[Start Button ausblenden]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="6">
+              <FIGURE SUBTYPE="PapEnd" FORMAT="1.00" ID="2">
+                <TEXT><![CDATA[Ende]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+          </ENTRIES>
+        </LAYOUT>
+        <CONNECTIONS>
+          <CONNECTION FORMAT="1.00" ID="3" FROM="1" TO="4" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="5" FROM="4" TO="8" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="7" FROM="6" TO="10" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="9" FROM="8" TO="6" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="11" FROM="10" TO="2" TEXT="" />
+        </CONNECTIONS>
+      </DIAGRAM>
+      <DIAGRAM FORMAT="1.00" ID="1" NAME="Check Eingabe" CREATED="2017.02.16 14:51:12" MODIFIED="2017.02.16 14:51:12">
+        <LAYOUT FORMAT="1.00" COLUMNS="5" ROWS="8">
+          <ENTRIES>
+            <ENTRY COLUMN="0" ROW="2">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="12">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="3">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="19">
+                <TEXT><![CDATA[Fehler]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="4">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="15">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="0" ANCHOR="True">
+              <FIGURE SUBTYPE="PapTitle" FORMAT="1.00" ID="0">
+                <TEXT><![CDATA[Check Eingabe]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="1">
+              <FIGURE SUBTYPE="PapStart" FORMAT="1.00" ID="1">
+                <TEXT><![CDATA[Start]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="2">
+              <FIGURE SUBTYPE="PapInput" FORMAT="1.00" ID="4">
+                <TEXT><![CDATA[Eingabe von User]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="4">
+              <FIGURE SUBTYPE="PapCondition" FORMAT="1.00" ID="6">
+                <TEXT><![CDATA[OK?]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="6">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="28">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="7">
+              <FIGURE SUBTYPE="PapEnd" FORMAT="1.00" ID="2">
+                <TEXT><![CDATA[Ende]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="2">
+              <FIGURE SUBTYPE="PapOutput" FORMAT="1.00" ID="33">
+                <TEXT><![CDATA[zu groß]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="3">
+              <FIGURE SUBTYPE="PapCondition" FORMAT="1.00" ID="31">
+                <TEXT><![CDATA[<]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="4">
+              <FIGURE SUBTYPE="PapCondition" FORMAT="1.00" ID="21">
+                <TEXT><![CDATA[Eingabe = Zahl]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="5">
+              <FIGURE SUBTYPE="PapOutput" FORMAT="1.00" ID="25">
+                <TEXT><![CDATA[Gewonnen
+Anzahl Versuche]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="6">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="26">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="3" ROW="3">
+              <FIGURE SUBTYPE="PapOutput" FORMAT="1.00" ID="35">
+                <TEXT><![CDATA[zu klein]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="4" ROW="2">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="37">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="4" ROW="3">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="39">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="4" ROW="4">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="44">
+                <TEXT><![CDATA[Versuche + 1]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="4" ROW="6">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="45">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+          </ENTRIES>
+        </LAYOUT>
+        <CONNECTIONS>
+          <CONNECTION FORMAT="1.00" ID="3" FROM="1" TO="4" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="5" FROM="4" TO="6" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="16" FROM="6" TO="15" TEXT="nein" />
+          <CONNECTION FORMAT="1.00" ID="24" FROM="21" TO="25" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="29" FROM="28" TO="2" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="17" FROM="15" TO="19" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="18" FROM="12" TO="4" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="20" FROM="19" TO="12" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="9" FROM="6" TO="21" TEXT="ja" />
+          <CONNECTION FORMAT="1.00" ID="27" FROM="25" TO="26" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="32" FROM="21" TO="31" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="30" FROM="26" TO="28" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="34" FROM="31" TO="33" TEXT="nein" />
+          <CONNECTION FORMAT="1.00" ID="36" FROM="31" TO="35" TEXT="ja" />
+          <CONNECTION FORMAT="1.00" ID="38" FROM="33" TO="37" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="40" FROM="37" TO="39" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="41" FROM="35" TO="39" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="43" FROM="39" TO="44" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="46" FROM="44" TO="45" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="47" FROM="45" TO="26" TEXT="" />
+        </CONNECTIONS>
+      </DIAGRAM>
+    </DIAGRAMS>
+  </PROJECT>
+</FRAME>
