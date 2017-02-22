@@ -1,0 +1,17 @@
+/*
+Allgemeine Elemente
+*/
+html{
+
+}
+
+body{
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/*
+Style Tabs
+*/
+#table1{
+  border: 1px;
+}

@@ -1,0 +1,39 @@
+/*
+Allgemeine Elemente
+*/
+html{
+
+}
+
+body{
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/*
+Style Tabs
+*/
+#tabs{
+  display: flex;
+  padding: 0;
+}
+
+ul#tabs li{
+  list-style: none;
+  margin-right: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+ul#tabs li.current{
+  background: #f1f1f1;
+}
+
+#ausgabe{
+  border: 1px;
+}
+
+#array{
+  background: red;
+  border: 1px;
+}
