@@ -42,9 +42,6 @@ var calc = function(e){
 }
 
 var color = function(bmi){
-
-  
-
   switch(bmi) {
     case bmi<=17.5:
         _e('BMI').className = 'BMIdarkBlue';
