@@ -160,9 +160,9 @@ var isPrim = function(value){
   for(var i=2; i<value; i++){
     if(value%i === 0){
       return false;
-    }
+    } 
   }
-  //_e('prim').innerHTML = 'Primzahlen sind: ' + 
+  //_e('prim').innerHTML = 'Primzahlen sind: ' +
   return value > 1;
 }
 /***************************

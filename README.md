@@ -39,7 +39,7 @@
 #User gibt Größe (in cm) und Gewicht (in kg) ein.
 #Eingabefehler werden im UI angezeigt.
 #Es wird BMI berechnet (zwei Kommastellen) und ausgegeben (BMI = kg/m2)
-#der Grafik bmi_tabelle.gif (siehe Ordner/ZIP) wird dem USer mit einem X angezeigt,
+#der Grafik bmi_tabelle.gif (siehe Ordner/ZIP) wird dem User mit einem X angezeigt,
 #wo er sich befindet.
 #
 #c) HTML & CSS üben/wiederholen
@@ -56,8 +56,14 @@
 #
 #Übung2
 #User Zahlen eingeben und in Array speichern + Ausgabe aller Zahlen
-#Zusatz: min, max, sum, löschen, primzahlen
+#Zusatz: min, max, sum, löschen, primzahlen (Primzahlen fehlt)
 #
 #Übung3
-#6 aus 45
+#6 aus 45 - Verschiedene Methoden für das dynamische Zeichnen einer Tabelle
+#Einfärben der ausgewählten Zahlen, nur 6 Zahlen können gewählt werden, keine Doppelten, sortiert
+#
+#Es fehlt: Abwählen, Abgewähltes löschen, Button erscheint nur wenn 6 Zahlen gewählt sind, Computer berechnet seine 6 zahlen, keine Doppelten, Vergleich beider Arrays, Zählen wie viele gleich sind
+#
+#Übung4
+#Objekte - kurze Erklärung
 #
