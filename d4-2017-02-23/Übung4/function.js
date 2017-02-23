@@ -15,7 +15,8 @@ $(document).ready(function(){
 Zeichnen des Spielfelds
 ***************************/
 var draw = function () {
-
+ //12 divs erstellen und Zeichnen
+ //jedes 5 bekommt ein clear
 }
 /***************************
 Füllen der Karten
