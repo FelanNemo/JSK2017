@@ -4,11 +4,86 @@
 	<title></title>
 	<meta charset="utf-8">
   <script src='function.js'></script>
+	<script>
+		var a = new Array();
+		//a besitzt nun alle Attribute und Methoden von Array
+		var a2 = []; //ist im Grunde eine leerer Array und wird in einer
+		// undefinierten var gespeichert
+		var a3 = a; //zeigt auf a, wenn ich a3 verändere verändert sich
+		//auch a, zeigt auf den selben Speicherplatz
+		//Zum kopieren von Arrays Workaround oder Methoden
+
+		a[0] = 'a';
+		a2[1] = 'b';
+		a3[2] = 'c';
+
+		console.log(a, a2, a3);
+
+		var o = new Object();
+		//ein neues Objekt erzeugen
+		var o2 = {};
+		//Leeres Objekt wird in eine undefinierten var gespeichert
+		//Objekt hatt immer eine Methode nämlich toString
+		var o3 = {
+			y:2,
+			z:'abc'
+		};//Ein Objekt mit dem Attribut y erzeugen
+
+		o.x = 3; //Eigenes Attribut zugefügt
+
+		var a4 = [];
+		a4['x'] = 3;
+		a4['y'] = 1;
+		a4['z'] = 'abc';
+
+		console.log( o.x, a4['x'],o['x'], a4.x);
+		//Objekte haben keine Methoden aber Array schon (theoretisch)
+		//In JS sind assoziative Arrays und anderes herum dadurch sind alles
+		//4 Aufrufe oben valide
+
+		var f = _e('formID');
+		var f2 = document.forms[0];
+		var f3 = document.forms['meinFormular'];
+		var f3 = document.forms.meinFormular;
+		var f4 = document.meinFormular;
+		//Ruft das selbe Formular auf bei form[0] kommt immer das erste
+		//Formular und durch ändern des HTMLs kann sich das ändern
+
+		var eigenschaft = 'x';
+		console.log(o.eigenschaft, o[eigenschaft]);
+
+		var o4 = [];
+		o4.x = 3;
+		o4.y = 1;
+
+		var o5 = {
+			a:[],
+			o:{
+				sub1:1
+			}
+		};
+
+		//JSON
+		//Objekt Literal name ohne iwas, in JSON mit""
+		var objektString = JSON.stringify(o5);
+		var o6 = JSON.parse('{"abc":1, "xyz":[1,2,3]}');
+		console.log(objektString, o6);
+		//JSON kann keine Methoden mitübertragen
+		//dient nur zum Daten übertragen
+
+		window.onload = function() {
+			var div = document.getElementById( 'x' );
+			div.innerHTML = 'B';
+			//div zeigt nur auf div und erzeugt kein neues
+
+		}
+	</script>
 	<link rel="stylesheet" href="style.css" >
 </head>
 <body>
-	<div id="">
-
+	<div id="x">
+		A
 	</div>
+	<form name="meinFormular" id="formID"></form>
 </body>
 </html>

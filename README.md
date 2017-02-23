@@ -69,4 +69,14 @@
 #
 #Day4: 23.02.2017
 #Übung1
+#Wiederholung Array und Objekte
+#
+#Übung2
+#Eingabe von "Alter" und Geschlecht,speichern der Datein und ausgeben
+#Eingabe und Selcets dynamisch, Überprüfen ob tag,monat,jahr und geschlecht eine Eingabe haben,Überprüfung Eingabe, speichern im Local Storage, löschen
+#
+#Fehlend: Select besser anpassen
+#
+#Übung3
+#JQuery
 #

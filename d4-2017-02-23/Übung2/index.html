@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+  <script src='function.js'></script>
+	<link rel="stylesheet" href="style.css" >
+</head>
+<body>
+	<ul id="tabs">
+		<li id="tabEin" class="current">Eingabe</li>
+		<li id="tabAus">Ausgabe</li>
+	</ul>
+
+	<div id="eingabe">
+		<form id="formEingabe">
+			Alter:
+				<select id="tag"><option value =""> Tag </option></select>
+				<select id="monat"><option> Monat </option></select>
+				<select id="jahr"><option> Jahr </option></select>
+				<br>
+
+			<div id="container">
+			Geschlecht:
+				<input type="radio" name="geschlecht" id="geschlechtW" value="w">
+					<label for="geschlechtW">Frau</label>
+				<input type="radio" name="geschlecht" id="geschlechtM" value="m">
+					<label for="geschlechtM">Mann</lable><br>
+				<!--For greieft auf die ID zu, value ist fürs verschicken-->
+			</div>
+			<button> Speichern </button>
+			<!--<input type="date">-->
+		</form>
+	</div>
+
+	<div id="ausgabe">
+		<button id="del"> Alles löschen </button>
+	</div>
+</body>
+</html>
