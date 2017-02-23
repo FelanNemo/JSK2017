@@ -1,24 +1,35 @@
 /***************************
 Globale Variablen
 ***************************/
-
+var search = [1,2,3,4,5,6];
 
 /***************************
 Window.onload - alles wird erst ausgeführt wenn die Seite
 fertig geladen ist
 ***************************/
-window.onload = function(){
-
-}
+$(document).ready(function(){
+  draw();
+});
 
 /***************************
-Erstezt im Code document.getElementById durch den Aufruf _e
-Parameter
-id : id des Elements
+Zeichnen des Spielfelds
 ***************************/
-var _e = function(id){
-  return document.getElementById(id);
-};
+var draw = function () {
+
+}
+/***************************
+Füllen der Karten
+***************************/
+var füllen = function(){
+
+}
+/***************************
+Maximal 2 Karten umdrehen
+(eventuell das Vergleichen auch hier)
+***************************/
+var umdrehen = function () {
+
+}
 
 /***************************
 Zeigt Elemente an

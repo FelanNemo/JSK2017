@@ -56,7 +56,11 @@ $('button').click(function(e){
   eingabe = $('input[type=text]').val(); .... val() ist wie value
   eingabe = $('input[type=text]').val(''); ... leeren
   eingabe = $('input[type=text]').focus(); ... courser reinsetzten
-})
+  .addClass('classenName') .... fügt Klasse hinzu und überschreibt
+  es nicht
+  .removeClass('classenName').... löscht eine Klasse
+  .toggleClass('classenName') .... wechslet zwischen löschen und hinzufüGrundlagen
+  .hasClass() ... hat es schon eine Klasse
   */
 });
 
