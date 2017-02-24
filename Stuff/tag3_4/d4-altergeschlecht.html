@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.functions.js"></script>
+	<script>
+
+var personen = JSON.parse( localStorage.getItem( 'personen' ) ) || [];
+
+console.log( 'personen', personen );
+
+// localStorage.removeItem()
+// localStorage.clear()
+
+
+
+
+window.onload = function() {
+
+	var i, oOption, monate;
+
+	_e( 'geschlechtW' ).checked = false;
+	_e( 'geschlechtM' ).checked = false;
+	printPersonen();
+
+	// erzeuge Optionen für Tage 1-31
+	for ( i=1; i<=31; i++ ) {
+		oOption = document.createElement( 'option' );
+		oOption.innerHTML = i;
+		oOption.value = i;
+		_e( 'tag' ).appendChild( oOption );
+	}
+
+	monate = ['Jänner','Feburar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+	for ( i=0; i<=11; i++ ) {
+		oOption = document.createElement( 'option' );
+		oOption.innerHTML = monate[i];
+		oOption.value = i+1;
+		_e( 'monat' ).appendChild( oOption );
+	}
+
+	for ( i=2017; i>=1900; i-- ) {
+		oOption = document.createElement( 'option' );
+		oOption.innerHTML = i;
+		oOption.value = i;
+		_e( 'jahr' ).appendChild( oOption );
+	}
+
+	_e( 'formEingabe' ).onsubmit = function ( e ) {
+		e.preventDefault();
+		var tag, monat, jahr, geschlecht = '';
+
+		tag = _e( 'tag' ).value * 1;
+		monat = _e( 'monat' ).options[ _e( 'monat' ).selectedIndex ].value * 1;
+		jahr = _e( 'jahr' ).value * 1;
+
+		if ( _e( 'geschlechtW' ).checked == true ) {
+			geschlecht = _e( 'geschlechtW' ).value;
+		}
+		if ( _e( 'geschlechtM' ).checked == true ) {
+			geschlecht = _e( 'geschlechtM' ).value;
+		}
+
+		console.log( tag, monat, jahr, geschlecht );
+		//CHECK
+
+
+		if ( isNaN( tag*monat*jahr ) || tag*monat*jahr == 0 || geschlecht == '' ) {
+			alert( 'Das geht so nicht...'); return;
+		}
+
+		var date = new Date( jahr, monat-1, tag );
+		if ( tag != date.getDate() ) {
+			alert( 'Datum gibt es nicht...'); return;
+		}
+
+		var person = {
+				gebdatum:date,
+				gebdatumString: tag + '.' + monate[monat-1] + '.' + jahr,
+				gebDatumArray: [tag,monat,jahr],
+				geschlecht:geschlecht,
+				alter:0
+		}
+
+		console.log( person );
+		personen.push( person );
+
+		alert( 'Daten gespeichert!' );
+		localStorage.setItem( 'personen', JSON.stringify(personen) );
+
+		/*
+		_e( 'geschlechtW' ).checked = false;
+		_e( 'geschlechtM' ).checked = false;
+		_e( 'tag' ).options[0].selected = true;
+		_e( 'monat' ).value='';
+		_e( 'jahr' ).selectedIndex=0;
+		*/
+		this.reset();
+		printPersonen();
+
+	}
+
+	_e( 'delAll' ).onclick = function(e) {
+		e.preventDefault();
+		localStorage.clear();
+		personen = [];
+		printPersonen();
+	}
+
+}
+
+// Erzeuge Tabelle mit allen Personen im id="ausgabe"
+var printPersonen = function() {
+		var oTable, oTR, oTD, i;
+		if ( personen.length == 0 ) {
+			_e('ausgabe').innerHTML = '';
+			_e( 'delAll').style.display = 'none';
+			return;
+		}
+		_e( 'delAll').style.display = '';
+		_e('ausgabe').innerHTML = '<table id="meineTabelle"><tr><th>Geb.Datum</th><th>Alter</th><th>Geschlecht</th></tr></table>';
+		oTable = _e( 'meineTabelle' );
+
+		//for ( i=0; i<personen.length; i++ ) {
+		for ( i in personen ) {
+			oTR = document.createElement( 'tr' );
+			oTable.appendChild( oTR );
+			oTD = document.createElement( 'td' );
+			oTD.innerHTML = personen[i].gebdatumString;
+			oTR.appendChild( oTD );
+			oTD = document.createElement( 'td' );
+			oTD.innerHTML = '?';
+			oTR.appendChild( oTD );
+			oTD = document.createElement( 'td' );
+			oTD.innerHTML = personen[i].geschlecht;
+			oTR.appendChild( oTD );
+		}
+
+
+}
+
+	</script>
+	<style>
+	body {font-size:2em; font-family:Arial; }
+	 select, button {font-size:1em;font-family:Arial;  }
+	 table { border-collapse:collapse; margin:20px auto; }
+	 tr:first-child { background:#000; color:#fff; }
+	 tr:nth-child(2n+1) { background:#ddd; }
+	 th,td { border:1px solid #000; padding:5px; text-align:center; }
+	</style>
+</head>
+<body>
+<div id="eingabe">
+	<form id="formEingabe">
+		Alter:
+			<select id="tag"><option value="">Tag</option></select> .
+			<select id="monat"><option value="">Monat</option></select> .
+			<select id="jahr"><option>Jahr</option></select><br>
+		Geschlecht:
+			<input type="radio" name="geschlecht" id="geschlechtW" value="w"><label for="geschlechtW">Frau</label>
+			<input type="radio" name="geschlecht" id="geschlechtM" value="m"><label for="geschlechtM">Mann</label><br>
+		<button>Speichern</button>
+
+</div>
+<div id="ausgabe">
+
+</div>
+<button id="delAll">Alles löschen</button>
+</body>
+</html>

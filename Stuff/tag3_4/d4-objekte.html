@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+
+	<script>
+
+var a = new Array();
+var a2 = [];
+var a3 = a; // Zeiger
+
+a[0] = 'a';
+a2[1] = 'b'
+a3[2] = 'c';
+console.log( a, a2, a3 );
+
+var o2 = new Object();
+var o = {
+	y:1,
+	z:'abc'
+};
+o.x = 3;
+
+var a4 = [];
+a4[ 'x' ] = 3;
+a4[ 'y' ] = 1
+a4[ 'z' ] = 'abc';
+
+console.log( o, o2, a4 );
+console.log( o.x, a4['x'], o['x'], a4.x );
+
+var eigenschaft = 'x';
+
+//o.push( 1 );
+
+var o3 = [];
+o3.x = 3;
+o3.y = 1;
+
+var o4 = {
+	a:[],
+	o:{
+		sub1:1
+	}
+}
+
+//JSON
+var objektString = JSON.stringify( o4 );
+var o5 = JSON.parse( '{"abc":1,"xyz":[1,2,3]}' );
+console.log( objektString, o5 );
+
+console.log( o.eigenschaft, o[eigenschaft] )
+
+
+window.onload = function() {
+	var div = document.getElementById( 'x' );
+	div.innerHTML = 'B';
+	var div2 = div;
+
+	f = document.getElementById( 'formID ');
+	f = document.forms[ 0 ];
+	f = document.forms[ 'meinFormular' ];
+	f = document.forms.meinFormular;
+	f = document.meinFormular;
+
+}
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<div id="x">A</div>
+	<form name="meinFormular" id="formID"></form>
+</body>
+</html>

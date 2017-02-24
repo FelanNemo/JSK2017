@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+
+<script>
+function _e( id ) {
+	return document.getElementById( id );
+}
+
+function hideEl( id ) {
+	_e( id ).style.display = 'none';
+}
+
+function showEl( id ) {
+	_e( id ).style.display = 'block';
+}
+
+function stringToFloat( str ) {
+	var number;
+	str = str.replace( ',' , '.' );
+	number = str * 1;
+	return number;
+}
+
+function floatToString( number ) {
+	var str;
+	str = number + '';
+	str = str.replace( '.' , ',' );
+	return str;
+}
+
+function roundNumber( number, stellen ) {
+	var faktor = Math.pow( 10, stellen );
+	return Math.round( number * faktor ) / faktor;
+}
+
+function initScreen() {
+	hideEl( 'ausgabe' );
+	showEl( 'eingabe' );
+	_e( 'gewicht' ).value = '';
+	_e( 'groesse' ).value = '';
+}
+
+window.onload = function() {
+	initScreen();
+	_e( 'eingabeform' ).onsubmit = submitBMI
+
+} // onload
+
+var submitBMI = function(event) {
+	event.preventDefault(); // HTML Submit blockiert
+
+	var fGewicht, iGroesse, fBMI, ausgabe = '';
+
+	_e( 'gewicht' ).className = '';
+	_e( 'groesse' ).className = '';
+
+	//checkEingabe
+	fGewicht = stringToFloat( _e( 'gewicht' ).value );
+	iGroesse = _e( 'groesse' ).value * 1;
+
+	if ( fGewicht < 40 || fGewicht > 120 || isNaN( fGewicht ) ) {
+		_e( 'gewicht' ).className = 'error';
+	}
+
+	if ( !( iGroesse >= 160 && iGroesse <= 200 ) ) {
+		_e( 'groesse' ).className = 'error';
+	}
+
+
+	if ( iGroesse >= 160 && iGroesse <= 200 && fGewicht >= 40 && fGewicht <= 120 ) {
+
+		fBMI = fGewicht / Math.pow( iGroesse/100 , 2 );
+
+		ausgabe = 'Dein BMI ist ' + floatToString( roundNumber( fBMI , 2)) + '!';
+		ausgabe += '<br>Gewicht: ' + fGewicht + 'kg';
+		ausgabe += '<br>Größe: ' + iGroesse + 'cm';
+		ausgabe += '<div id="grafik"><img src="bmi_tabelle.gif"><span id="marker">X</span></div>';
+		ausgabe += '<p><a href="#" id="back">zurück zur Eingabe</a></p>';
+
+		// Grafik
+		_e( 'ausgabe' ).innerHTML = ausgabe;
+
+
+		_e( 'marker' ).style.left = 50 + ( iGroesse - 160 ) * 10 + 'px';
+		_e( 'marker' ).style.top = 232 - ( fGewicht - 40 ) * 3  + 'px';
+
+		_e( 'back' ).onclick = function(e) {
+			e.preventDefault();
+			initScreen();
+		}
+
+		showEl( 'ausgabe' );
+		hideEl( 'eingabe' );
+
+		//_e( 'ausgabe' ).style.display = 'block';
+		//_e( 'eingabe' ).style.display = 'none';
+
+	} //if
+
+} // submit
+</script>
+<style>
+body, input, button {font:30px Arial; }
+button strong { font-size:1.5em; color:red; }
+.error { background-color:red; color:white; }
+#grafik { position:relative; }
+#marker { position:absolute; top:100px; }
+</style>
+</head>
+<body>
+
+<div id="eingabe">
+	<form method="post" action="?" id="eingabeform">
+		<input type="text" id="gewicht"> Gewicht in kg (40-120)<br>
+		<input type="text" id="groesse"> Größe in cm (160-200)<br>
+		<button>BMI</button>
+	</form>
+</div>
+<div id="ausgabe">
+	ERGEBNIS!
+</div>
+
+</body>
+</html>

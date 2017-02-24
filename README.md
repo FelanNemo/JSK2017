@@ -29,6 +29,7 @@
 #Übung4
 #Zahlraten
 #
+#-------------------------------------------------------------------------------
 #
 #Aufgabe 1:
 #a) Übungsbeispiele wiederholen
@@ -67,6 +68,8 @@
 #Übung4
 #Objekte - kurze Erklärung
 #
+#-------------------------------------------------------------------------------
+#
 #Day4: 23.02.2017
 #Übung1
 #Wiederholung Array und Objekte
@@ -82,4 +85,30 @@
 #
 #Übung4
 #Memory
+#
+#-------------------------------------------------------------------------------
+#
+#Aufgabe2
+#a) jQuery + Lotto
+#Versuche das Beispiel Lotto 6 aus 45 mit Hilfe von jQuery nachzubauen.
+#
+#Aufgabe b)
+#Baue eine kleine Tab-Navigation
+#Beispiel: http://www.elated.com/res/File/articles/development/javascript/document-object-model/javascript-tabs/javascript-tabs.html
+
+#c - Experte!)
+#Beispiel Vokalmemory fertigstellen.
+#Beispiel-Inhalt:
+#var voc = [
+#    ['dog','Hund'],
+#    ['cat','Katze'],
+#    ['snake','Schlange'],
+#    ['lion','Löwe'],
+#    ['mouse','Maus'],
+#    ['bug','Käfer'],
+#    ['ant','Ameise'],
+#    ['horse','Pferd'],
+#    ['cow','Kuh'],
+#    ['sheep','Schaf']
+#  ];
 #

@@ -1,0 +1,22 @@
+Aufgabe 4) jQuery + Lotto
+Versuche das Beispiel Lotto 6 aus 45 mit Hilfe von jQuery nachzubauen.
+
+Aufgabe 5)
+Baue eine kleine Tab-Navigation
+Beispiel: http://www.elated.com/res/File/articles/development/javascript/document-object-model/javascript-tabs/javascript-tabs.html
+
+Aufgabe 6 - Experte!)
+Beispiel Vokalmemory fertigstellen.
+Beispiel-Inhalt:
+var voc = [
+    ['dog','Hund'],
+    ['cat','Katze'],
+    ['snake','Schlange'],
+    ['lion','Löwe'],
+    ['mouse','Maus'],
+    ['bug','Käfer'],
+    ['ant','Ameise'],
+    ['horse','Pferd'],
+    ['cow','Kuh'],
+    ['sheep','Schaf']
+  ];

@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.functions.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+	<script>
+
+//window.onload = function() {
+
+$( document ).ready( function() {
+
+	document.getElementById( 'absatz' ); // HTMLNodeElement
+	$( '#absatz' ); //jQuery Objekt
+	_e( 'absatz' ); // HTMLNodeElement
+
+	document.getElementById( 'absatz' ).innerHTML = 'Neuer Text';
+	$( '#absatz' ).html( 'Neuer Text' );
+
+	var oAbsatz = document.getElementById( 'absatz' );
+	var jAbsatz = $( '#absatz' );
+
+	oAbsatz.innerHTML = 'Schon wieder neu';
+	jAbsatz.html( 'Nochmal??' );
+
+	var html = oAbsatz.innerHTML;
+	html = jAbsatz.html();
+
+	oAbsatz.innerHTML = '';
+	jAbsatz.html( '' );
+
+	jAbsatz = $( oAbsatz );
+	jAbsatz = $( document.getElementById( 'absatz' ) );
+
+	oAbsatz = jAbsatz.get(0);
+
+	jAbsatz.get(0).innerHTML = 'Alles beim Alten!';
+
+	$( 'p' ).html('Alles gleich!');
+	$( '.absatz' ).css( 'background-color', '#ccc' );
+
+	$( 'p:nth-child(2n+1)' ).css( 'border-bottom','1px solid #000' );
+
+	/*
+	$( 'p:last-child' ).css( 'background-color', '#fcc' );
+	$( 'p:last-child' ).css( 'color', '#00c' );
+	*/
+	$( 'p:last' ).css( {
+			'background-color':'#fcc',
+			color:'#00c',
+			fontSize:'2em'
+	});
+
+	$( 'p:not(#absatz)' ).css( { fontFamily:'Courier' } );
+
+	//console.log( $( 'p + p' ).css( 'background-color' ) );
+
+	$( 'p' ).addClass( 'neueKlasse' );
+	$( 'p' ).removeClass( 'absatz' );
+	// toggleClass()
+	// hasClass()
+
+
+	$( 'button' ).click( function(e) {
+		e.preventDefault();
+		var eingabe;
+		eingabe = $( 'input[type="text"]' ).val();
+		$( 'input[type="text"]' ).val( '' );
+		$( 'input[type="text"]' ).focus();
+		console.log( eingabe );
+	})
+
+
+	//$( document.createElement( 'div') );
+
+});
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+
+	<p class="absatz" id="absatz">Das ist ein Absatz.</p>
+	<p class="absatz">2. Absatz</p>
+	<p>3. Absatz</p>
+	Gib was ein: <input type="text"><button>Klick mich</button>
+</body>
+</html>

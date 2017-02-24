@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.functions.js"></script>
+	<script>
+var showEl = function(id) { _e(id).style.display = 'block'; }
+var hideEl = function(id) { _e(id).style.display = 'none'; }
+
+window.onload = function() {
+	hideEl( 'aus' );
+	_e( 'zahl' ).value = '';
+	_e( 'zahl' ).focus();
+
+	document.forms[0].onsubmit = zahlSpeichern;
+	_e( 'tab_ein' ).onclick = function() {
+		showEl( 'ein' );
+		hideEl( 'aus' );
+		_e( 'zahl' ).value = '';
+		_e( 'zahl' ).focus();
+	};
+	_e( 'tab_aus' ).onclick = function() {
+		showEl( 'aus' );
+		hideEl( 'ein' );
+		zahlenTab();
+	};
+}
+var aZahlen = [];
+var zahlSpeichern = function( e ) {
+	e.preventDefault();
+	var eingabe, userZahl;
+
+	eingabe = _e( 'zahl' ).value;
+	userZahl = zahlEinlesen( eingabe );
+
+	if ( isNaN( userZahl ) || eingabe == '' ) {
+		alert( 'keine Zahl');
+	} else {
+		aZahlen.push( userZahl );
+	}
+	console.log( aZahlen );
+	_e( 'zahl' ).value = '';
+	_e( 'zahl' ).focus();
+}
+
+var sumArray = function( a ) {
+	var i, s = 0;
+	for ( i = 0; i < a.length; i++ ) {
+		s+=a[i];
+	}
+	return s;
+}
+
+var zahlenTab = function() {
+	// gib Zahlen aus Array in Tab "aus" aus
+	var ausgabe = '', i;
+	for ( i = 0; i < aZahlen.length; i++ ) {
+		ausgabe += aZahlen[ i ] + ' (<a href="#" onclick="confirm(\'Wirklich löschen\') ? loescheZahl('+i+') : 0">X</a>)<br>';
+	}
+	ausgabe += '======<br>Summe: '+sumArray( aZahlen );
+	_e( 'aus' ).innerHTML = ausgabe;
+}
+
+var loescheZahl = function( i ) {
+	aZahlen.splice(i,1);
+	zahlenTab();
+}
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+
+	<ul>
+		<li id="tab_ein">Eingabe</li>
+		<li id="tab_aus">Ausgabe</li>
+	</ul>
+
+	<div id="ein">
+		<form>Zahl:<input type="text" id="zahl"><button>SAVE</button></form>
+	</div>
+	<div id="aus">
+		Zahlen, die der User eingegeben hat...
+	</div>
+
+
+</body>
+</html>

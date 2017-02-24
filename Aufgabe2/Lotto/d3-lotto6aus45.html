@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="wifi.functions.js"></script>
+	<script>
+
+window.onload = function() {
+	createTable3();
+
+
+}
+
+var createTable = function() {
+	var ausgabe = '', i, j, x = 0;
+
+	ausgabe += '<table border="1">';
+	for ( i=1; i<=8; i++ ) {
+		ausgabe += '<tr>';
+		for ( j=1; j<=6; j++ ) {
+			x++; //( (i-1)*6 + j )
+			if ( x <= 45 ) {
+				ausgabe += '<td>'+x+'</td>';
+			} else {
+				ausgabe += '<td>&nbsp;</td>';
+			}
+		}
+		ausgabe += '</tr>';
+	}
+	ausgabe += '</table>';
+
+	_e( 'ausgabe' ).innerHTML = ausgabe;
+}
+
+
+
+var createTable2 = function() {
+	var ausgabe = '', i;
+
+	ausgabe += '<table border="1">';
+
+	for ( i=1; i<=45; i++ ) {
+
+		if ( i%6 == 1 ) { // 1,7,13,19,...
+			ausgabe += '<tr id="row'+i+'>';
+		}
+		ausgabe += '<td>'+i+'</td>';
+		if ( i%6 == 0 ) { // 6,12,18,...
+			ausgabe += '</tr>';
+		}
+	}
+
+	ausgabe += '</table>';
+
+	alert( ausgabe );
+
+	_e( 'ausgabe' ).innerHTML = ausgabe;
+}
+
+var aLotto = [];
+
+var createTable3 = function() {
+	var oTable, oTR, oTD, i;
+	oTable = document.createElement( 'table' );
+	oTable.geklickt = 0;
+	for ( i=1; i<=45; i++) {
+		if ( i%6 == 1 ) {
+			oTR = document.createElement( 'tr' );
+			oTable.appendChild( oTR );
+		}
+		oTD = document.createElement( 'td' );
+		oTD.innerHTML = '<b>'+i+'</b>';
+		//oTD.setAttribute( 'data-i', i );
+		oTD.i = i;
+		oTD.onclick = function() {
+			//if ( aLotto.length > 5 ) { return; }
+			//if ( this.className == 'selected' ) { return; }
+
+			if ( aLotto[this.i] ) {
+				delete aLotto[this.i];
+				this.className = '';
+				oTable.geklickt--;
+				return;
+			}
+			if ( oTable.geklickt > 5 ) {
+				
+				return;
+			}
+			oTable.geklickt++;
+			//var oTD = this;
+			this.className = 'selected';
+			//alert( this.getAttribute( 'data-i' ) ); // ???
+			//window.aLotto.push( this.i );
+
+
+			aLotto[ this.i ] = true;
+
+			console.log( window.aLotto )
+			//alert( this.i );
+		}
+		oTR.appendChild( oTD );
+	}
+
+	_e( 'ausgabe' ).appendChild( oTable );
+
+	oTable.setAttribute( 'border', '1');
+	//oTable.style.background = '#ccc';
+//	oTable.innerHTML = '<tr><td>TEST</td></tr>';
+
+
+}
+
+
+	</script>
+	<style>
+	.selected { background:#dd5421; }
+	</style>
+</head>
+<body>
+
+
+<div id="ausgabe"></div>
+<!--
+
+<table border="1">
+	<tr> * 8
+		<td></td> * 6
+	</tr>
+</table>
+-->
+
+
+</body>
+</html>
