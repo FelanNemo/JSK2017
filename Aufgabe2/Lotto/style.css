@@ -1,0 +1,21 @@
+/*
+Allgemeine Elemente
+*/
+html{
+
+}
+
+body{
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/*
+Style
+*/
+.selected {
+  background:#dd5421;
+}
+
+table,tr, td{
+  border: 1px solid black;
+}
