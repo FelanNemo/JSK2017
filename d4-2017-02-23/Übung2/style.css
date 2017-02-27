@@ -28,6 +28,7 @@ th,td {
 
 #ausgabe{
   display: none;
+  border: 1px;
 }
 
 /*
@@ -48,10 +49,6 @@ ul#tabs li{
 
 ul#tabs li.current{
   background: #f1f1f1;
-}
-
-#ausgabe{
-  border: 1px;
 }
 
 #array{

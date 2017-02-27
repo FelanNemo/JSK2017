@@ -53,14 +53,9 @@ var drawTable = function(){
 Markieren und speichern der gewählten Zahlen
 ***************************/
 var numberClicked = function(){
-  //var jButton = $('btn1'), jTable = $('tb1'), jTD = $('table td');
-
-  //console.log($(this).attr('i'));
-
   jButton.attr( 'disabled', 'disabled' );
 
   if ( aLotto[$(this).attr('i')] ) {
-    console.log('Ich bin im if');
     delete aLotto[$(this).attr('i')];
     this.className = '';
     jTable.geklickt--;
@@ -76,10 +71,7 @@ var numberClicked = function(){
   jTable.geklickt++;
   this.className = 'selected';
 
-  //aLotto[ $(this).attr('i') ] = true;
   aLotto.push($(this).attr('i'))
-
-  //console.log( window.aLotto )
 }
 
 /************************
@@ -96,7 +88,6 @@ var randomNumber = function(){
   document.getElementById('gewählteNummern').innerHTML = "Die Nummern sind: " + aLotto;
   document.getElementById('zufallsNummern').innerHTML = "Die Zufallsnummern sind: " + aSpiel;
 
-  //console.log(i);
   if(i==7){
     aSpiel = [];
   }
@@ -106,7 +97,6 @@ var randomNumber = function(){
 Generiert die Zufallszahlen
 ************************/
 var zufallsZahl = function( von, bis ) {
-  // Math.random() -> 0...1
   var zufall, anzahl;
   anzahl = bis - von + 1;
   zufall = Math.floor( Math.random() * anzahl ) + von;
