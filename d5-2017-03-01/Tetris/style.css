@@ -1,0 +1,53 @@
+body {
+  font:20px Arial;
+  line-height:1.2;
+}
+
+table, tr, td{
+  border: 1px solid #ccc;
+}
+
+td{
+  width: 10px;
+  height: 10px;
+}
+
+.eins{
+  background: #00F5FF;
+  border: 2px;
+}
+
+#zwei{
+  background: #00F5FF;
+  border: 2px;
+}
+
+#drei{
+  background: #00F5FF;
+  border: 2px;
+}
+
+#vier{
+  background: #00F5FF;
+  border: 2px;
+}
+
+#fünf{
+  background: #00F5FF;
+  border: 2px;
+}
+
+#sechs{
+  background: #00F5FF;
+  border: 2px;
+}
+
+#sieben{
+  background: #00F5FF;
+  border: 2px;
+}
+
+#fix{
+    background: #000;
+    border: 2px;
+}
