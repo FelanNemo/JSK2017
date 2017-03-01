@@ -1,0 +1,58 @@
+/*
+Allgemeine Elemente
+*/
+body{
+  font: 20px;
+  line-height: 1.2;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+
+/*
+Style Tabs
+*/
+nav a{
+  padding: 0;
+  color: #000;
+  text-decoration: none;
+}
+
+nav ul{
+  list-style: none;
+  padding: 0;
+  display: flex;
+  background: #ccc
+}
+
+nav li{
+  display: flex;
+  padding: 5px;
+  cursor: pointer;
+  position: relative;
+}
+
+nav ul ul {
+  list-style: none;
+  display: none;
+  border: none;
+  position: absolute;
+}
+
+nav li ul li{
+  list-style: none;
+  cursor: pointer;
+}
+
+nav ul li.current, nav ul li.current a{
+  background: black;
+  color: #fff;
+}
+
+nav ul li:hover, nav ul li:hover a{
+  background: black;
+  color: #fff;
+}
+
+nav ul li:hover ul{
+  display: block;
+}

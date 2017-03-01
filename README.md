@@ -112,3 +112,11 @@
 #    ['sheep','Schaf']
 #  ];
 #
+#-------------------------------------------------------------------------------
+#
+#Day5: 01.03.2017
+#Übung1
+#Navigation in HTML und CSS
+#
+#Übung2
+#Navigation in JQuery

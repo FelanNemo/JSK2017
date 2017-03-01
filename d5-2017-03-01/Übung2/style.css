@@ -1,0 +1,42 @@
+body {
+  font:20px Arial;
+  line-height:1.2;
+}
+
+nav ul {
+  list-style:none;
+  padding:0px;
+  background:#ccc;
+}
+
+nav li {
+  display:inline-block;
+  position:relative;
+}
+
+nav a {
+  display:block;
+  text-decoration:none;
+  padding:5px 15px;
+  font-weight:bold;
+  color:#000;
+}
+
+nav li:hover > a {
+  background:#000;
+  color:#fff;
+}
+
+nav ul ul {
+  display:none;
+  position:absolute;
+  top:calc(1.2em + 10px);
+  left:0;
+  background:#999;
+}
+
+nav ul ul li {
+  display:block;
+}
+
+/*nav ul li:hover ul { display:block; }*/
