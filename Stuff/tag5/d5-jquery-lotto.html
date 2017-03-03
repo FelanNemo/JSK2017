@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+	<script>
+$( document ).ready( function() {
+	var i, tr, table = $( '<table border="1">').appendTo( 'body' );
+
+	for ( i=1; i<=45; i++ ) {
+		if ( i%6 == 1 ) {
+			tr = $('<tr>').appendTo( table );
+		}
+		tr.append(
+			$( '<td>').attr('data-i',i).html( i ).on('click',function() {
+
+				if ( $('.selected').length == 6 && !$(this).hasClass( 'selected' ) ) {
+					return;
+				}
+
+				$( this ).toggleClass( 'selected' );
+				//alert( $(this).attr('data-i') );
+			})
+		);
+	}
+
+});
+	</script>
+	<style>
+	.selected {background:#ccc;}
+	</style>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+	<script>
+$( document ).ready( function() {
+
+	/*
+	$( 'nav ul li' ).on( 'mouseenter', function() {
+		$( 'ul', this ).fadeIn();
+	} ).on( 'mouseleave', function() {
+		$( 'ul', this ).fadeOut();
+	});
+	*/
+
+	$( 'nav ul li' ).on( 'click', function() {
+		$( 'ul', this ).fadeIn();
+	}).on( 'mouseleave', function() {
+		$( 'ul', this ).fadeOut();
+	});
+
+});
+
+/*
+var meinTO = setTimeout( function() { }, 1000 )
+clearTimeout( meinTO )
+
+var meinInterval = setInterval( function() { STEINfliegtnachUnten() }, 1000 )
+clearInterval( meinInterval )
+*/
+
+	</script>
+	<style>
+	body { font:20px Arial; line-height:1.2; }
+	nav ul { list-style:none; padding:0px; background:#ccc; }
+	nav li { display:inline-block; position:relative; }
+	nav a { display:block; text-decoration:none; padding:5px 15px; font-weight:bold; color:#000; }
+	nav li:hover > a { background:#000; color:#fff;  }
+	nav ul ul { display:none; position:absolute; top:calc(1.2em + 10px); left:0; background:#999; }
+	nav ul ul li { display:block; }
+	/*nav ul li:hover ul { display:block; }*/
+	</style>
+</head>
+
+<body>
+	<nav>
+	<ul>
+		<li><a href="#">Startseite</a></li>
+		<li><a href="#">Produkte</a>
+			<ul>
+				<li><a href="#">T-Shirts</a></li>
+				<li><a href="#">Flip Flops</a></li>
+				<li><a href="#">Spritzpistolen</a></li>
+				<li><a href="#">Luftmatratzen</a></li>
+			</ul>
+		</li>
+		<li><a href="#">Wir über uns</a></li>
+		<li><a href="#">Impressum</a></li>
+	</ul>
+</nav>
+</body>
+</html>

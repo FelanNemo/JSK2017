@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+	<script>
+var tuwas = function(a) { return a*a; }
+
+var y = 2;
+var y2 = tuwas( y );
+
+var globalF;
+
+var g2 = function() {
+	globalF();
+}
+
+$( document ).ready( function() {
+
+	var i;
+	for ( i=1; i<=5; i++ ) {
+
+		(function(j) {
+			$( '<button>')
+				.html( j )
+				.appendTo( 'body' )
+				.attr( 'data-i', j)
+				.on('click',function() {
+					console.log( 'click', this );
+
+					globalF();
+					/*console.log( j );
+					console.log( $( this ).attr( 'data-i') );
+					console.log( this.i );*/
+				}).get(0).i = j;
+			}(i));
+
+	}
+
+
+	globalF = function() {
+		console.log( 'globalF', this );
+
+		console.log( $( this ).attr( 'data-i') );
+	}
+
+
+});
+
+
+var a = 1, x;
+// IIFE
+(function(b) {
+	//var b = a;
+	x = function() {
+		//alert( b );
+	}
+}(a));
+
+a = 2;
+x();
+
+// Closure
+var multiply = function( a ) {
+	return function( b ) {
+		return a * b;
+	};
+}
+
+var m5 = multiply(5);
+var m6 = multiply(6);
+
+console.log( m5( 3 ), m5( 4 ), m6( 3 ) );
+
+// Callback
+var f1 = function( f2 ) {
+	setTimeout( function(){ f2(); }, 2000 );
+}
+f1( function() { console.log( 'Timeout Ende' ); } );
+
+
+var glob = {
+	a:1,
+	b:2,
+	m:function() {
+		console.log( this ); // this == glob
+		console.log( this.a, this.b );
+	}
+}
+glob.m();
+
+var F = function(c,b) {
+		var privat = 6;
+		this.c = c;
+		this.b = b;
+		this.m = function() {
+			alert( this.c );
+		}
+
+}
+
+F.prototype.print = function() {
+	alert( this.c );
+}
+
+
+F(6,7);
+
+console.log( 'window.c', window.c );
+console.log( 'c', c );
+
+var obj = new F(8,9);
+console.log( obj );
+obj.m();
+
+var obj2 = new F('a','b');
+obj2.c = 'neu';
+obj2.print();
+
+var a = new Array();
+
+Array.prototype.push = function( v ){
+	if ( isFinite(v) ) this[this.length] = v;
+}
+
+Array.prototype.delete = function(i) {
+		this.splice(i,1);
+};
+
+a.push( 1 );
+a.push( 'a' );
+console.log( a );
+
+var a2 = [1,2,3];
+
+a2.delete(0);
+
+String.prototype.toNumber = function() {
+	return this*1;
+}
+
+var s = '123';
+console.log( s, s.toNumber() );
+
+// delete String.prototype.toNumber;
+
+console.log( s, s.toNumber() );
+
+
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+</body>
+</html>

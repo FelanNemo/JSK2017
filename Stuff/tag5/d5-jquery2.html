@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+	<script>
+$( document ).ready( function() {
+
+	//$( '#test' ).click( function() { alert( 'Hallo jQuery!' ); } );
+
+	$( '#test' ).on( 'click', function() { alert( 'on click 1'); } );
+	$( '#test' ).off( 'click' );
+	$( '#test' ).on( 'click', function() { alert( 'on click 2'); } );
+
+
+
+	if ( $( 'button' ).length > 0 ) { console.log( 'button sind da ',$( 'button' ).length ); }
+
+
+	/*console.log( $( 'button')[0], $( 'button' ).get(0)  );
+	console.log( $( 'button')[1], $( 'button' ).get(1)  );*/
+
+	var button = $( 'button' )[0];
+	button.innerHTML = 'neuer Text';
+	$( button ).html( 'neuer Text' );
+
+	var button = $( 'button' ).eq(1);
+	button.html( 'neuer Text 2' );
+
+ 	var button = $( $('button')[0] );
+
+
+	$( 'button' ).on( 'mouseover mouseout', function() {
+			$( this ).toggleClass( 'over' );
+	});
+
+	// transparente jQuery Methoden > das gleiche jQuery Objekt zurück
+	// destruktive jQuery Methoden > jQuery Objekt von anderen Elementen zurück
+	// terminierende jQuery Methoden > irgendetwas was kein jQuery Objekt ist
+
+	$( '#test' ).get(0); // HTMLNodeElement
+	$( '#test' ).on( 'click', function() { } ); // ?
+
+	/*var btn1 = $( '#test' );
+	var btn1_nochmal = $( '#test' ).html( 'neuer Text' ); */
+
+	$( '#test' )
+		.html( 'KLick jetzt!')
+		.css({ border:'1px solid blue'})
+		.off('click')
+		.on('click',function(){
+
+		});
+
+	$( '<div>' );
+	$( '<div />' );
+	$( '<div></div>' );
+	$( document.createElement( 'div' ) ); // am schnellsten!
+
+ 	$( '<div>' )
+		.attr( 'id', 'meins' )
+		.html( 'da <b>steht</b> was drin' )
+		.addClass( 'over' )
+		.on( 'click', function() { alert( 'Autsch!'); })
+		.appendTo( 'body' );
+
+	$( '<div id="meins" class="over">da steht <b>was</b> drin</div>' )
+		.on( 'click', function() { alert( 'Autsch!'); })
+		.prependTo( 'body' );
+
+	$( 'body' ).append(
+
+		$( '<div id="mehrdiv">')
+			.html( 'hurra!!!')
+			.addClass( 'over' )
+			.css( {
+				marginTop:20
+			}) // ACHTUNG kein ; hier!!!
+
+	);
+
+
+	$( 'b', 'button' ).css('color','white');
+
+
+	$( 'div' ).each( function() {
+
+		if ( $(this).html().indexOf( 'drin' ) > -1 )	{
+			$( this ).css( 'background-color', 'green' );
+		}
+
+		$( 'b', this ).html( 'Ich bin ein b in einem div');
+
+	}); // ...
+
+});
+
+if ( $( 'button' ).length == 0 ) { console.log( 'keine button hier' ); }
+
+$( 'button' ).on( 'mouseover mouseout', function() {
+		$( this ).toggleClass( 'over' );
+});
+	</script>
+	<style>
+
+	.over { background:red; }
+
+	</style>
+</head>
+<body>
+<button id="test">Klick mich</button>
+<button id="test2">Klick mich auch</button>
+<button id="test3">mich <b>auch</b></button>
+
+
+</body>
+</html>

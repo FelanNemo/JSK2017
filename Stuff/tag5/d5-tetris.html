@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+	<script>
+var countRows = 10, countCols = 7;
+var createTable = function() {
+	var cols, rows, table, tr;
+	table = $('<table>').appendTo( '#game' );
+	for ( rows=1; rows<=countRows; rows++ ) {
+			tr = $( '<tr>' ).appendTo( table );
+			for ( cols=1; cols<=countCols; cols++ ) {
+				$( '<td>' ).appendTo( tr );
+			}
+	}
+}
+var random = function(i,j) { return Math.floor( Math.random() * (j-i+1) ) + i; }
+
+
+
+var tile_O = [
+		[1,1],
+		[1,1]
+];
+
+var tile_T = [
+	[0,1,0],
+	[1,1,1],
+	[0,0,0]
+];
+var tile_Z = [
+	[1,1,0],
+	[0,1,1],
+	[0,0,0]
+];
+var tile_S = [
+	[0,1,1],
+	[1,1,0],
+	[0,0,0]
+];
+var tile_J = [
+	[0,1,0],
+	[0,1,0],
+	[1,1,0]
+];
+var tile_L = [
+	[0,1,0],
+	[0,1,0],
+	[0,1,1]
+];
+var tiles = [tile_O,tile_T,tile_Z,tile_S,tile_J,tile_L];
+
+var moveTemp = function(cl) {
+	var i,j, tile = activeTile;
+	for ( i=0; i<tile.length; i++ )	{
+		for ( j=0; j<tile[i].length; j++ )	{
+			if ( tile[i][j] == 1 ) {
+				$( 'tr:nth-child('+(rowCount+i)+') td:nth-child('+(col+j)+')' ).addClass( cl );
+			}
+		}
+	}
+}
+
+var rowCount = -1, col = 4;
+var activeTile = tiles[random(0,tiles.length-1)];
+var play = function() {
+	var i,j, tile = activeTile;
+	moveTemp('gt');
+	if ( rowCount+1 > countRows ||  $( '.s.gt' ).length > 0 ) {
+		$( '.g' ).removeClass( 'g' ).addClass( 's' );
+		rowCount = -1;
+		activeTile = tiles[random(0,tiles.length-1)];
+		col = random(1,countCols-tile[0].length+1);
+	} else {
+		$( '.g' ).removeClass( 'g' );
+	}
+	$( '.gt' ).removeClass( 'gt' );
+
+
+	moveTemp('g');
+
+
+	rowCount++;
+}
+var I;
+$( document ).ready( function() {
+	createTable();
+	I = setInterval( play, 500 );
+
+	$( document ).on( 'keydown', function(e) {
+			var key = e.originalEvent.keyCode;
+
+			if ( key != 37 && key != 39 ) return false;
+			// 37 -> links
+			// 39 -> rechts
+			if ( key == 37 && col > 1 && !$('.g').prev().hasClass('s') ) { col--; rowCount--; play(); }
+			if ( key == 39 && col < countCols-activeTile[0].length+1 && !$('.g').next().hasClass('s') ) { col++; rowCount--; play(); }
+
+	});
+
+});
+
+
+	</script>
+	<style>
+	td { border:1px solid #000; width:30px; height:30px; }
+	.g { background:#ccc; }
+	.s { background:#000; }
+	</style>
+</head>
+<body>
+	<div id="game"></div>
+</body>
+</html>
