@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+	<script src="function.js"></script>
+  <script>
+	var loadPage = function(i){
+		var request = new XMLHttpRequest();
+
+		request.open('post','http://wifi.1av.at/516/alex/content.php',true); //open hat zwei Parameter die Methode und die Adresse (kann auch andere Parameter haben)
+		//open Initializiert den Request
+		request.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+		ajaxLoading(true);
+		request.send('page='+i); //Stoßt den Request an, Parameter welche mitgesendet werden
+
+		request.onreadystatechange = function(){ //Eventhandler des Request Objektes, 4 heißt Antwort ist da
+			if(request.readyState == 4 && request.status == 200){
+				ajaxLoading(false);
+				//console.log(request.responseText); //.responseText ist die gespeicherte Antwort des Servers
+				$('#content').html(request.responseText);
+			}
+		}
+	};
+
+	var ajaxLoading = function(b){
+		if( b ){//erzeuge Loading Overlay
+			$('<div id="ajaxLoader">').css({
+				position: 'fixed',
+				top: 0,
+				left: 0,
+				right: 0,
+				bottom: 0,
+				background: 'rgba(0,0,0,0.5)',
+				zIndex: 2147483647,
+				color: 'white'
+			}).html('Inhalte werden geladen...').appendTo('body');
+		}else{//zerstöre Overlay
+			$('#ajaxLoader').remove();
+		}
+	};
+
+	var clickLink = function(e){
+		e.preventDefault();
+		var page = $(this).attr('data-page');
+
+		$('.active').removeClass('active');
+		$(this).parent().addClass('active');
+		//var page = $(this).attr('href');
+		loadPage(page);
+	}
+
+	$( document ).ready(function() {
+		var div = document.getElementById('content');
+		loadPage(1);
+
+		$('a').on('click', clickLink);
+	});
+
+	$(document).on('click','a',clickLink); //Event, Element, Funktion
+  </script>
+	<link rel="stylesheet" href="style.css" >
+
+</head>
+<body>
+
+	<ul>
+		<li class="active" ><a data-page="1" href="content-page1">Seite 1</a></li>
+		<li ><a data-page="2" href="content-page2">Seite 2</a></li>
+		<li ><a data-page="3" href="content-page3">Seite 3</a></li>
+	</ul>
+
+	<div id="content">
+	</div>
+</body>
+</html>

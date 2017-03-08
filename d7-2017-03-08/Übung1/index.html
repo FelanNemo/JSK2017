@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+	<script src="function.js"></script>
+  <script>
+
+  //Request Objekt
+    var request = new XMLHttpRequest();
+
+    request.open('GET','http://wifi.1av.at/516/alex/test.php'); //open hat zwei Parameter die Methode und die Adresse (kann auch andere Parameter haben)
+    //open Initializiert den Request
+
+    request.send(); //Stoßt den Request an, Parameter welche mitgesendet werden
+
+    request.onreadystatechange = function(){ //Eventhandler des Request Objektes, 4 heißt Antwort ist da
+      if(request.readyState == 4){
+        console.log(request.responseText); //.responseText ist die gespeicherte Antwort des Servers
+      }
+    }
+
+    
+  </script>
+	<link rel="stylesheet" href="style.css" >
+
+</head>
+<body>
+</body>
+</html>
