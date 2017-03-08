@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:strukturdaten xmlns:tns="http://www.help.gv.at/xml/strukturdaten/#20060626" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.help.gv.at/xml/strukturdaten/#20060626 authstrukturdaten.xsd ">
+<metadaten datenname="VERZEICHNIS" datenuri="http://www.statistik.at/web_de/statistiken/regionales/regionale_gliederungen/gemliste_knz.xml">
+<letzteaenderung>2016-10-20T14:01:32</letzteaenderung>
+<datenstruktur>
+	<elementname datatype="CHAR(5)">GEMNR</elementname>
+	<elementname datatype="VARCHAR(50)">GEMNAM38</elementname>
+	<elementname datatype="CHAR(5)">GEMNR2</elementname>
+	<elementname datatype="CHAR(2)">GEMST</elementname>
+	<elementname datatype="CHAR(4)">GEMPLZ</elementname>
+	<elementname datatype="CHAR(4)*">PLZ</elementname>
+
+</datenstruktur>
+</metadaten>
+</tns:strukturdaten>
+
