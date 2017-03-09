@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	<script>
+	toastr.options = {
+	  "positionClass": "toast-top-center",
+	}
+
+$.ajaxSetup({
+	url:'http://wifi.1av.at/516/tn/quiz2.php',
+	type:'POST'
+});
+
+$( document ).on( 'focus', '#s1 input', function() {
+	$( '#bg' ).addClass( 'zoomHim' );
+});
+
+$( document ).on( 'click', '#s1 button', function(e) {
+	e.preventDefault();
+	game.name = $( '#s1 input' ).val();
+	if ( game.name == '' ) {
+		toastr.error( 'Armin will wissen, wie du heisst!' );
+	} else {
+		game.getQuestion();
+	}
+})
+
+var game = {
+	name:'',
+	points:0,
+	level:1,
+	maxlevel:5,
+	frageID:-1,
+	loading:function() {
+		$( 'section' ).hide();
+		$( '#s2' ).show();
+	},
+	getQuestion:function() {
+		game.loading();
+		$.ajax({
+			data:{type:'frageneu',level:game.level},
+			success:function(d) {
+				$( '#s3, #s2' ).toggle();
+				game.frageID = d.frageID;
+				$( '#s3 h1' ).html( d.frage );
+				d.antworten.shuffle();
+				$( 'button' ).removeClass( 'clicked answerTrue answerFalse');
+				$( '#s3 button' ).each( function(i) {
+					$(this).html( d.antworten[i].value ).attr('data-answer',d.antworten[i].oldIndex);
+				}).on('click', function() {
+					clearInterval( game.interval );
+					$(this).addClass( 'clicked' );
+					$( '#s3 button' ).off( 'click' ); // es kann kein weiterer Button geklickt werden
+					game.checkAnswer( $(this).attr( 'data-answer' ) );
+				});
+				clearInterval( game.interval );
+				game.time = 10000;
+				game.interval = setInterval( game.progress, 40 );
+			}
+		})
+	},
+	checkAnswer:function(i) {
+		$.ajax({
+			data:{
+				type:'check',
+				level:game.level,
+				frageID:game.frageID,
+				antwort:i*1+1
+			},
+			success:function(d){
+				$( '.clicked' ).addClass(  d.checkOK ? 'answerTrue' : 'answerFalse' );
+				$( 'button[data-answer="'+(d.correctAntwort*1-1)+'"]').addClass( 'answerTrue' );
+				game.level++;
+				if ( d.checkOK )
+					game.points+=game.time;
+				if ( game.level == 6 || !d.checkOK ) {
+					game.endGame();
+				} else
+					setTimeout( game.getQuestion, 2000 );
+
+			}
+		});
+
+
+	},
+	endGame:function() {
+		$( '#s3, #s4' ).toggle();
+		$.ajax({
+			data:{type:'writehighscore',ms:game.points,name:game.name},
+			success:function(d){
+				$('#s4 div').html( d.html );
+			}
+		})
+	},
+	time:10000,
+	interval:0,
+	progress:function() {
+		game.time-=40;
+		if ( game.time < 0 ) {
+			clearInterval( game.interval );
+			game.endGame();
+		} else {
+			$( 'progress' ).val( 100 * game.time/10000 );
+		}
+	}
+
+}
+
+Array.prototype.shuffle = function() {
+	var temp = this.slice(), j=0;
+	for ( var k in temp ) {
+		temp[k] = {value:temp[k], oldIndex:k };
+	}
+	while( temp.length > 0 ) {
+		var anz = temp.length;
+		var i = Math.floor( Math.random() * anz );
+		var elem = temp.splice(i,1);
+		this[j] = elem[0];
+		j++;
+	}
+
+}
+
+	</script>
+	<style>
+* { margin:0;padding:0; }
+#bg { filter: blur(0px); transform:scale(1); transition:transform 30s, filter 5s; position:absolute; z-index:-1; top:0; left:0; right:0; bottom:0; background:url(http://orf.at/static/images/site/news/20150939/millionenshow_15_jahre_body_assinger_a.4644228.jpg); background-size:cover; }
+
+#bg.zoomHim { transform:scale(2);  filter: blur(10px); }
+body { overflow:hidden; }
+body, input, button { font:24px Arial; color:#fff;  }
+html, body, #all, section, section > div { width:100%; height:100%; }
+#all { display:table; background:rgba(0,0,0,0.6); border-collapse:collapse; }
+section { display:table-row; }
+section > div { display:table-cell; vertical-align:middle; text-align:center; }
+input { color:#000; }
+#s2, #s3, #s4 { display:none; }
+
+button { margin:10px; border: 1px solid #fff; background:transparent; color:#fff; cursor:pointer; padding:5px 20px;  }
+button:hover, button.clicked { background:rgba(255,255,255,0.35); }
+button.answerTrue { background:rgba(0,255,0,0.35); }
+button.answerFalse { background:rgba(255,0,0,0.35); }
+#q { max-width:50%; margin:0 auto; }
+#s3 button { width:20%; height:3.5em; }
+
+	</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="all">
+<section id="s1">
+	<div>
+		Dein Name:<br>
+		<input type="text"><br>
+		<button>Starte Quiz</button>
+	</div>
+</section>
+<section id="s2">
+	<div>
+		Frage wird geladen...
+	</div>
+</section>
+<section id="s3">
+	<div>
+		<h1 id="q"></h1>
+		<button></button>
+		<button></button><br>
+		<button></button>
+		<button></button><br>
+		<progress value="100" max="100"></progress>
+	</div>
+</section>
+<section id="s4">
+	<div>
+	</div>
+</section>
+</div>
+</body>
+</html>

@@ -7,6 +7,7 @@
 			  src="https://code.jquery.com/jquery-3.1.1.min.js"
 			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 			  crossorigin="anonymous"></script>
+	<script src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 	<script src="function.js"></script>
   <script>
 	var plz = {};
@@ -31,22 +32,88 @@
 		}
 	});*/
 
+
+
+$(document).on('submit', '#formPLZ', function(e){
+	e.preventDefault();
+	var plzInput = $('#zipcode').val();
+	if(plz[plzInput]){
+		$('#place').val(plz[plzInput][0]);
+		if(plz[plzInput].length === 1){
+			$('#zipcode').css({color:''});
+		} else {
+			$('#places').show();
+			$('#places option').remove();
+
+			for(var i in plz[plzInput]){
+				$('<option>').html(plz[plzInput][i]).appendTo('#places');
+			}
+		}
+	} else {
+		$('#place').val('');
+		$('#zipcode').css({color:'red'});
+	}
+});
+
+$(document).on('change','#places', function(){
+	$('#place').val($(':selected',this).html())
+})
+
+$(document).ready(function(){
+
 	$.ajax({
 		url:'http://wifi.1av.at/516/alex/getplz.php',
 		method:'GET',
 		data:{json:1},
 		success:function(d) {
-			console.log(JSON.parse(d));
+			var startScript = Date.now();
+			//console.log(JSON.parse(d));
+			plz = JSON.parse(d);
+
+			var places = [];
+
+			for(var i in plz){
+				for(var j in plz[i]){
+					if(places.indexOf(plz[i][j]) == -1)
+						places.push(plz[i][j]);
+				}
+			}
+			//places.sort();
+			//places.reverse();
+			places.sort(function (a,b) {
+				return a<b ? 1:-1;
+			});
+			console.log('Dauer Array', Date.now() - startScript);
+			console.log(places);
+
+			$('#place2').autocomplete({
+					source: places,
+					minLength: 3
+				});
 		}
 	});
+
+});
+
   </script>
 	<link rel="stylesheet" href="style.css" >
+	<link rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.min.css" >
+	<link rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.structure.min.css" >
+	<link rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.theme.min.css" >
 
 </head>
 <body>
+<form id="formPLZ">
 	Land: <b>Österreich</b><br>
-	PLZ: <input type="text" id="zipcode" maxlength="4" pattern="[0-9]{4}"> <br>
-	Ort: <input type="text" id="place"> <br>
+	PLZ: <input type="text" id="zipcode" maxlength="4" pattern="[0-9]{4}"><br>
+	Ort: <input type="text" id="place" readonly><br>
+	<select id="places"></select><br>
 	<button> Check my Place</button>
+</form>
+<br>
+<form id="autoPLZ">
+	PLZ: <input type="text" id="zipcode2" readonly><br>
+	Ort: <input type="text" id="place2" ><br>
+</form>
 </body>
 </html>
