@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+  <script>
+
+    //setTimeout(cb, 1000); //callback oder anonyme Funktion
+
+    $(document).ready(function(){
+      /*var meinCountdown = function(x){
+        //x--;
+        $('#countdown').html(x--);
+        setTimeout(function(){meinCountdown(x);}, 1000);
+      };*/
+
+      var meinCountdown = function(x, id, callback){
+        var count = function(){
+          $(id).html(x--);
+          if(x>=0){
+            setTimeout(count, 1000);
+          } else{
+            if(typeof callback == 'function') callback();
+          }
+        };
+        count();
+      }
+
+      var c = $('#countdown').html()*1;
+      meinCountdown(c, '#countdown',function(){$('#countdown').css({color: '#f00'})});
+
+      var c2 = $('#countdown2').html()*1;
+      var c3 = $('#countdown3').html()*1;
+
+      //Callback Hell
+      meinCountdown(c2, '#countdown2', function(){
+        meinCountdown(c3, '#countdown3', function(){
+          meinCountdown(100, '#countdown2');
+        });
+      });
+
+      var x = 1;
+
+      var pro = new Promise(function(resolve, reject) {
+        if(x == 1){
+          resolve('ok');
+        } else{
+          reject('error');
+        }
+      });
+
+      pro.then(function(d){alert(d);})
+          .catch(function(d){console.log(d);});
+
+      var meinCountdownPromises = function (i,id) {
+        var timeout;
+        return new Promise(function(res, rej) {
+          var count = function(){
+            $(id).html(i--);
+            if(i>=0){
+              timeout = setTimeout(count, 1000);
+            } else{
+              res();
+            }
+          };
+          count();
+          $(id).on('click', function (e) {
+            clearTimeout(timeout);
+            rej();
+          })
+        });
+      }
+
+      meinCountdownPromises(10,'#c4')
+        .then(function(){
+          $('#c4').css({color: '#0f0'});
+        })
+        .catch(function(d){
+          alert(d);
+        });
+
+    });//dom ready
+
+  </script>
+
+</head>
+<body>
+  <div id="countdown"> 5 </div>
+  <div id="countdown2"> 3 </div>
+  <div id="countdown3"> 10 </div>
+  <hr>
+  <div id="c4"> 10 </div>
+</body>
+</html>

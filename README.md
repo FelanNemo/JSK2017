@@ -124,3 +124,48 @@
 #Übung3
 #Tetris
 #
+#-------------------------------------------------------------------------------
+#
+#Day6: 02.03.2017
+#Übung1
+#Fahrrad rennen
+#
+#Übung2
+#Plugin (synch mit Github hat nicht funktioniert, kann unter Stuff gefunden werden)
+#
+#-------------------------------------------------------------------------------
+#
+#Day7: 08.03.2017
+#
+#Übung1
+#XMLHttpRequest()
+#
+#plz
+#Überprüfen zw Ort und plz
+#
+#Währungsrechner
+#mit aktuellem Kurs
+#
+#asynchronesHTML
+#ajax
+#
+#-------------------------------------------------------------------------------
+#
+#Day8: 09.03.2017
+#Quiz
+#nicht fertig
+#
+#Quiz2
+#ein kleines Quiz mit ajax
+#
+#-------------------------------------------------------------------------------
+#
+#Aufgabe3
+#Newsticker mit Verbindung zu ORF.at
+#
+#-------------------------------------------------------------------------------
+#
+#Day9: 15.03.2017
+#promises
+#countdown
+#
