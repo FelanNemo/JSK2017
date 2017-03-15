@@ -85,10 +85,101 @@
 
     });//dom ready
 
+    $.ajaxSetup({
+      url:'http://wifi.1av.at/516/alex/promisetest.php',
+      type:'post',
+      dataType:'json'
+    });
+
+    $(document).on('click','#btn', function(e){
+      e.preventDefault();
+      var add10 = function(z,cb){
+        $.ajax({
+          data:{number:z},
+          success: function(resp){
+            cb(resp.x*1 + 10)
+          }
+        })
+      }
+
+      var multiply5 = function(z,cb){
+        $.ajax({
+          data:{number:z},
+          success: function(resp){
+            cb(resp.x*5)
+          }
+        })
+      }
+
+      add10(3, function (erg) {
+        multiply5(erg, function(erg){
+          add10(erg, function (erg) {
+            console.log(erg);
+          })
+        })
+      });
+
+    });
+
+    $(document).on('click','#btn2', function(e){
+      e.preventDefault();
+      var add10 = function(z){
+        return new Promise(function(res, rej) {
+          $.ajax({
+            data:{number:z},
+            success: function(resp){
+              res(resp.x*1 + 10);
+            }
+          });
+        });
+      }
+
+      var multiply5 = function(z){
+        return new Promise(function(res, rej) {
+          $.ajax({
+            data:{number:z},
+            success: function(resp){
+              res(resp.x*5);
+            }
+          });
+        });
+      }
+
+      add10(3).then(multiply5).then(add10).then(console.log)
+
+
+    });
+
+    $(document).on('click','#btn3', function(e){
+      e.preventDefault();
+      var req = function(z){
+        return new Promise(function(res, rej) {
+          $.ajax({
+            data:{number:z},
+            success: function(d){
+              res(d);
+            }
+        });
+      });
+    }
+      Promise.all([req(1),req(2)])
+        .then(function () {
+          console.log('1+2 fertig');
+        });
+
+    //$.when( req(1),req(2)).done(function(){})
+
+  });
+
+
   </script>
 
 </head>
 <body>
+  <button id="btn">Starte Ajax Calls(ohne)</button>
+  <button id="btn2">Starte Ajax Calls(mit)</button>
+  <button id="btn3">Starte 2 Calls</button>
+    <hr>
   <div id="countdown"> 5 </div>
   <div id="countdown2"> 3 </div>
   <div id="countdown3"> 10 </div>

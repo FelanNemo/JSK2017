@@ -1,0 +1,39 @@
+* {
+  margin:0;
+  padding:0;
+}
+
+body {
+  font:20px Arial;
+  line-height:1.2;
+  color: #fff;
+}
+
+body, input, button {
+  font:24px Arial;
+  color:#000;
+}
+
+input, button{
+  border-radius: 5px;
+}
+
+#wrapper, #user{
+  width: 500px;
+}
+
+td{
+  text-align: right;
+}
+
+#check{
+  text-align: left;
+}
+
+#save{
+  margin-left: 193px;
+}
+
+.error{
+  border: 1px solid red;
+}
