@@ -170,4 +170,4 @@
 #countdown mit Callback und Promises danach ebenfalls mit Ajax
 #
 #Userverwaltung
-# soll auf der Userseite speichern [Name,Geb,PLZ,Ort,E-Mail,Interessen] und check der Daten, später: Autofill von den Daten
+# soll auf der Userseite speichern (Name,Geb,PLZ,Ort,E-Mail,Interessen) und check der Daten, später: Autofill von den Daten
