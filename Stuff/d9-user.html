@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+
+$.ajaxSetup({
+	type:'POST',
+	dataType:'json'
+});
+
+//$.ajaxURL = function(s) { return 'http://wifi.1av.at/516/tn/userdata.php?function=' + s; }
+//var ajaxURL = 'http://wifi.1av.at/516/tn/userdata.php';
+
+var checkWas = function( art, inhalt, fieldid ) {
+	return new Promise( function(gut,schlecht) {
+		$.ajax({
+			url: 'http://wifi.1av.at/516/tn/userdata.php?function=check',
+			data:{type:art,value:inhalt},
+			success:function(d) {
+				if ( d.result == 'ok' ) { gut(); }
+				else { schlecht( d.code ); }
+			},
+			error:schlecht
+		});
+	}).catch( function() {  $( fieldid ).addClass('error'); } );
+}
+
+var meinUser = {};
+
+$( document ).on( 'submit', '#meinForm', function(e) {
+	e.preventDefault();
+
+	meinUser.name = $( '#inputName' ).val();
+	meinUser.gebdatum = $( '#inputGebDatum' ).val();
+	meinUser.plz = $( '#inputPLZ' ).val();
+	meinUser.email = $( '#inputEmail' ).val();
+
+	var checkName = function() {
+		return checkWas( 'string', meinUser.name, '#inputName' );
+	}
+	var checkGebDatum = function() {
+		return checkWas( 'date', meinUser.gebdatum, '#inputGebDatum' );
+	}
+	var checkPLZ = function() {
+		return checkWas( 'number', meinUser.plz, '#inputPLZ' );
+	}
+	var checkEmail = function() {
+		return checkWas( 'email', meinUser.email, '#inputEmail' );
+	}
+
+	/*checkName()
+		.catch( function() { console.log( 'Name'); } )
+		.then( function() { return checkGebDatum().catch( function() { console.log( 'GebDatum'); } ) } )
+		.then( function() { return checkPLZ().catch( function() { console.log( 'PLZ'); } ) } )
+		.then( function() { return checkEmail().catch( function() { console.log( 'Email'); } ) } );
+		*/
+
+	var saveData = function() {
+		return new Promise(function(gut, schlecht) {
+			$.ajax({
+				url: 'http://wifi.1av.at/516/tn/userdata.php?function=save&name=alex',
+				data:{value:JSON.stringify(meinUser)},
+				//data:{value:meinUser},
+				success:function(d) {
+					if ( d.result == 'ok' ) { gut(); }
+					else { schlecht( d.code ); }
+				},
+				error:schlecht
+			});
+
+		});
+	}
+		$('.error').removeClass( 'error' );
+		checkName()
+			.then( checkGebDatum )
+			.then( checkPLZ )
+			.then( checkEmail )
+			.then( function() {
+				if ( $('.error').length == 0 ) {
+					saveData()
+						.then(function(){alert( 'gespeichert.'); })
+						.catch( function() { alert( 'da ging was schief!'); });
+				}
+			});
+
+	/*checkWas( 'date', meinUser.gebdatum );
+	checkWas( 'number', meinUser.plz );
+	checkWas( 'email', meinUser.email );*/
+
+});
+
+var alteUser;
+$.ajax({
+	url:'http://wifi.1av.at/516/tn/userdata.php?function=get&name=alex',
+	success:function(d) {
+		alteUser = d.data.users;
+		console.log( alteUser );
+	}
+});
+$.ajax({
+	url:'http://wifi.1av.at/516/tn/userdata.php?function=check&name=alex',
+	type:'POST',
+	data:{type:'exists',value:'a@a'},
+	success:function(d) {
+		if ( d.result=='ok')
+			console.log( 'a@a gibts schon' );
+	}
+});
+
+$.ajax({
+	url:'http://wifi.1av.at/516/tn/userdata.php?function=check&name=alex',
+	type:'POST',
+	data:{type:'exists',value:'b@b'},
+	success:function(d) {
+		if ( d.result=='ok')
+			console.log( 'b@b gibts schon' );
+	}
+});
+	</script>
+	<style>
+	.error {background:red;}
+	</style>
+</head>
+<body>
+	<form id="meinForm">
+		Name: <input type="text" id="inputName"><br>
+		Geb.Datum: <input type="text" id="inputGebDatum"><br>
+		PLZ: <input type="text" id="inputPLZ"><br>
+		E-Mail: <input type="text" id="inputEmail"><br>
+		<button>Speichern</button>
+	</form>
+
+</body>
+</html>

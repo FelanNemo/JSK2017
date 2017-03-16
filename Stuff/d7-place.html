@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.min.css">
+	<link rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.theme.min.css">
+	<script>
+var plz = {};
+
+// plz = {"1180": ["Wien", "Graz"], ... }
+// plz = [{plz:'1180',ort:'Wien'},{plz:'1180',ort:'Graz'}, ]
+
+
+/*
+$.ajax({
+	url:'http://wifi.1av.at/516/alex/getplz.php',
+	method:'GET',
+	data:{xml:1},
+	success:function(d) {
+		var plzXML = $( d );
+		$( 'datensatz', plzXML ).each( function() {
+			var datenPLZ = $('element:nth-child(5)', this ).html();
+			var datenOrt = $('element:nth-child(2)', this ).html();
+			if ( !plz[ datenPLZ ] ) plz[ datenPLZ ] = [];
+			plz[ datenPLZ ].push( datenOrt );
+		});
+		console.log( plz );
+
+	}
+});
+*/
+
+
+
+$( document ).on( 'submit', '#formPLZ', function(e) {
+	e.preventDefault();
+	var plzInput = $( '#zipcode' ).val();
+	if ( plz[ plzInput ] ) {
+		$( '#place' ).val( plz[ plzInput ][0] );
+		if ( plz[ plzInput ].length === 1 ) {
+			$( '#zipcode' ).css({color:''});
+		} else {
+			$( '#places' ).show();
+			$( '#places option' ).remove();
+			for ( var i in plz[ plzInput ] ) {
+				$( '<option>' ).html( plz[ plzInput ][i] ).appendTo( '#places' );
+			}
+		}
+	} else {
+		$( '#place' ).val( '' );
+		$( '#zipcode' ).css({color:'red'});
+	}
+});
+
+$( document ).on( 'change', '#places', function() {
+	$( '#place' ).val( $(':selected', this).html() );
+});
+
+$( document ).ready( function() {
+
+	$.ajax({
+		url:'http://wifi.1av.at/516/alex/getplz.php',
+		method:'GET',
+		data:{json:1},
+		success:function(d) {
+			var startScript = Date.now();
+			plz = JSON.parse( d );
+			var places = [];
+			for ( var i in plz ) {
+				for ( var j in plz[i] )
+					if ( places.indexOf( plz[i][j] ) == -1 )
+						places.push( plz[i][j] );
+			}
+			places.sort( function(a,b) { if ( a === b ) return 0; return a < b ? 1 : -1; } ); // !!!
+			//places.sort();
+			//places.reverse();
+
+			console.log( 'Dauer Array', Date.now() - startScript, 'ms' );
+			console.log( places );
+
+				$( '#place2' ).autocomplete({
+					source: places,
+					minLength: 3
+				});
+		}
+	});
+
+
+});
+
+	</script>
+	<style>
+	#places { display:none; }
+	</style>
+</head>
+<body>
+	<form id="formPLZ">
+		Land: <b>Österreich</b><br>
+		PLZ: <input type="text" id="zipcode" maxlength="4"><!-- pattern="[0-9]{4}" -->
+		<select id="places"></select><br>
+		Ort: <input type="text" id="place" readonly><br>
+	<button>Check my Place</button>
+</form>
+	<form id="autoPlace">
+		PLZ: <input type="text" id="zipcode2" readonly>
+		Ort: <input type="text" id="place2"><br>
+	</form>
+</body>
+</html>

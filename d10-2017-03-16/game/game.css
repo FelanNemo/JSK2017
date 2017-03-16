@@ -1,0 +1,19 @@
+* {
+  margin:0;
+  padding:0;
+}
+
+body {
+  font:20px Arial;
+  line-height:1.2;
+  color: #fff;
+  background-color: #ccc;
+}
+
+#world{
+  width: 480px;
+  height: 320px;
+  border: 1px solid #ccd;
+  background-color: white;
+  margin: auto;
+}

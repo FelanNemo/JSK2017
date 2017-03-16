@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+var loadPage = function( i, callback ) {
+	var request = new XMLHttpRequest();
+	// request.open( 'GET', 'http://wifi.1av.at/516/alex/content-page'+i+'.php', true );
+	// request.open( 'GET', 'http://wifi.1av.at/516/alex/content.php?page=' + i, true );
+	request.open( 'POST', 'http://wifi.1av.at/516/alex/content.php', true );
+	//request.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+	request.setRequestHeader( 'Content-Type', 'application/json' );
+	ajaxLoading(true);
+	//request.send( 'page=' + i );
+	request.send( JSON.stringify({page:i}) );
+
+	request.onreadystatechange = function() {
+		if ( request.readyState == 4 && request.status == 200 ) {
+			ajaxLoading(false);
+			callback( request.responseText );
+			//$( '#content' ).html( request.responseText );
+		}
+	}
+}
+
+var loadPagejQuery = function( i, callback ) {
+	ajaxLoading(true);
+	$.ajax({
+		url:'http://wifi.1av.at/516/alex/content.php',
+		method:'POST',
+		//dataType:'application/json',
+		data:{page:i},
+		success:function( resp ) {
+			ajaxLoading(false);
+			callback( resp );
+		}
+	})
+
+
+}
+
+
+var ajaxLoading = function( b ) {
+	if ( b ) { // erzeuge Loading Overlay
+		$( '<div id="ajaxloader">' ).css({
+			position:'fixed',
+			top:0,
+			left:0,
+			right:0,
+			bottom:0,
+			background:'rgba(0,0,0,0.5)',
+			zIndex:2147483647,
+			color:'white'
+		}).html('Inhalte werden geladen...').appendTo( 'body' );
+
+	} else { // zerstöre Overlay
+		$( '#ajaxloader' ).remove();
+	}
+}
+
+var linkKlick = function( e ) {
+	e.preventDefault();
+	//e.stopPropagation();
+	var page = $(this).attr( 'data-page' );
+	//var page = $(this).attr( 'href' );
+	$( '.active' ).removeClass( 'active' );
+	$(this).parent().addClass( 'active' );
+	loadPagejQuery( page, function(response) {
+		response = JSON.parse( response );
+		$( '#content' ).html( response.page );
+		//$( 'a' ).off('click').on( 'click', linkKlick );
+	} );
+}
+
+$( document ).ready( function() {
+	loadPagejQuery( 1, function( response ){
+		$( '#content' ).html( response );
+	} );
+	//$( 'a' ).on( 'click', linkKlick );
+});
+
+$( document ).on( 'click', 'a', linkKlick );
+
+
+	</script>
+	<style>
+		body { font-size:2em; }
+		.active a { color:red; font-weight:bold; }
+	</style>
+</head>
+<body>
+	<ul>
+		<li class="active"><a href="content-page1.php" data-page="1">Seite 1</a></li>
+		<li><a href="content-page2.php" data-page="2">Seite 2</a></li>
+		<li><a href="content-page3.php" data-page="3">Seite 3</a></li>
+	</ul>
+	<div id="content"></div>
+</body>
+</html>

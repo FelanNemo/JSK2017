@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+  <script src="jQuery-3.1.1.min.js"></script>
+  <script src="wifi_functions.js"></script>
+
+	<script>
+	var id = 0;
+
+  var Airplane = function(startX, startY, targetAirport, ident) {
+    this.radius = 10;
+    this.posX = startX;
+    this.posY = startY;
+    this.target = targetAirport;
+    this.direction = 0;
+    this.identification =  ident;
+		this.select = false;
+    this.color = targetAirport.color;
+    this.collision = function(x,y,radius) {
+      var dx = this.posX - x;
+      var dy = this.posY - y;
+      var distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < this.radius + radius) {
+        return true;
+      }
+      return false;
+    }
+    this.move = function() {
+      $('#'+this.identification).css({
+        top: this.posY,
+        left: this.posX
+      });
+    }
+    this.getDirectionToPoint = function(x,y) {
+      var angle = Math.atan2(this.posY-y, this.posX-x);
+      var degrees = (angle*180)/Math.PI;
+      console.log('Grade zum Ziel:', degrees);
+
+    	return degrees;
+			/*
+      var m = (y-this.posY)/(x-this.posX);
+      var ergebnis =  Math.atan(m) * (180/Math.PI);
+
+      return (ergebnis);
+      */
+    }
+		var _this=this;
+		this.selectAirplane = function(e){
+			e.stopPropagation();
+			$(this).addClass('active');
+			_this.select = true;
+			console.log(_this.select);
+		}
+    this.getDrawObject = function() {
+      return $('<div id="'+this.identification+'">')
+				.on('click',this.selectAirplane)
+				.css({
+					top: this.posY-this.radius,
+					left: this.posX-this.radius,
+          zIndex: 5,
+          position: 'absolute',
+          width: this.radius*2 + 'px',
+          height: this.radius*2 + 'px',
+          backgroundColor: this.color, border: '1px solid black'});
+    }
+  }
+
+  var Airport = function(posX, posY, name, color) {
+    this.radius = 10;
+    this.posX = posX;
+    this.posY = posY;
+    this.name = name;
+    this.color = color;
+    this.getDrawObject = function() {
+      return $('<div id="'+this.name+'">').css(
+        {top: this.posY-this.radius, left: this.posX-this.radius,
+          borderRadius: '50%',
+          position: 'absolute',
+          width: this.radius*2 + 'px',
+          height: this.radius*2 + 'px',
+          backgroundColor: this.color, border: '1px solid black'});
+    }
+  }
+
+  var FlightGame = {
+    airports:[],
+    airplanes:[],
+    sizeWidth: 320,
+    sizeHeight: 480,
+    gamefield:0,
+    moveDistance:2,
+    interval: '',
+    gameTick:function() {
+      console.log('Tick');
+      // move Airplanes
+      for(var i = FlightGame.airplanes.length -1; i >= 0; i--) {
+        var ap = FlightGame.airplanes[i];
+        var radDirection = ap.direction*(Math.PI/180);
+
+        ap.posX = FlightGame.moveDistance*Math.cos(radDirection)*-1 + ap.posX;
+        ap.posY = FlightGame.moveDistance*Math.sin(radDirection)*-1 + ap.posY;
+        ap.move();
+
+        if(ap.collision(ap.target.posX, ap.target.posY, ap.target.radius)){
+            $('#'+ap.identification).remove();
+            FlightGame.airplanes.splice(i,1);
+        }
+				/*if(ap.collision(x, y, r )){
+					alert('GAME OVER! You killed the people!');
+				}*/
+      }
+    },
+    drawAirports: function() {
+      for (i in this.airports) {
+        this.airports[i].getDrawObject().appendTo(this.gamefield);
+      }
+    },
+    createAirplane: function() {
+      var rnd = zufallsZahl(0, this.airports.length-1);
+      var rnd2 = zufallsZahl(0, this.airports.length-1)
+      while( rnd == rnd2) {
+        rnd2 = zufallsZahl(0, this.airports.length-1)
+      }
+      var startAp = this.airports[rnd];
+      var targetAp = this.airports[rnd2];
+
+			id++;
+
+      //var startAp = this.airports[2]; // RandomAirport
+      //var targetAp = this.airports[1]; // Random auch!
+      var airplane = new Airplane(startAp.posX, startAp.posY, targetAp, id);
+      airplane.getDrawObject().appendTo(this.gamefield);
+      this.airplanes.push(airplane);
+      airplane.direction = airplane.getDirectionToPoint(airplane.target.posX, airplane.target.posY);
+		},
+    startGame:function(gamefield) {
+      // Setup
+      this.airports = [];
+      this.airplanes = [];
+      clearInterval(this.interval);
+      this.gamefield = gamefield;
+      this.gamefield.empty();
+
+      var airport = new Airport(20,20, 'Wien', 'red');
+      this.airports.push(airport);
+      airport = new Airport(300,20, 'Frankfurt', 'blue');
+      this.airports.push(airport);
+      airport = new Airport(20,460, 'Paris', 'green');
+      this.airports.push(airport);
+      airport = new Airport(300,460, 'London', 'pink');
+      this.airports.push(airport);
+      this.drawAirports();
+			this.createAirplane();
+      setInterval(this.createAirplane.bind(this), 5000);
+
+      this.interval = setInterval(this.gameTick, 100);
+    }
+  };
+
+
+  $(document).ready(function(){
+
+  });
+
+	$(document).on('click', '#gamefield', function() {
+		$('.active').removeClass('active');
+		for(i in FlightGame.airplanes){
+			console.log(FlightGame.airplanes[i]);
+			if(FlightGame.airplanes[i].select){
+				FlightGame.airplanes[i].direction = FlightGame.airplanes[i].getDirectionToPoint(event.pageX, event.pageY)
+
+				//FlightGame.airplanes[i].posY = event.pageY;
+				FlightGame.airplanes[i].select = false;
+			}
+		}
+	})
+
+  $(document).on('click', 'button', function() {
+    FlightGame.startGame($('#gamefield'));
+  })
+	</script>
+	<style>
+.active{
+	background-color: yellow !important;
+}
+
+#gamefield{
+  position: relative;
+  border: 1px solid black;
+  width: 320px;
+  height: 480px;
+}
+
+	</style>
+</head>
+<body>
+
+  <div id="gamefield">
+  </div>
+  <button>Start</button>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+﻿URL: http://wifi.1av.at/516/tn/quiz2.php
+
+// ----------------------
+	NEUE FRAGE
+-----------------------//
+REQUEST JSON
+{
+	type:'frageneu',
+	level: INT(1-5)
+}
+
+RESONSE JSON/STRING
+{
+	frageID: INT,
+	frage: STRING,
+	antworten: [ 
+		STRING,
+		STRING,
+		STRING,
+		STRING
+	]
+}
+
+// ----------------------
+	ANTWORT ÜBERPRÜFEN
+-----------------------//
+REQUEST JSON
+{
+	type:'check',
+	level: INT(1-5),
+	frageID: INT
+	antwort: INT(1-4)
+}
+RESONSE JSON/STRING
+{
+	checkOK: BOOLEAN,
+	correctAntwort: INT (1-4)
+}
+	
+// ----------------------
+	SPEICHERE HIGHSCORE
+-----------------------//
+REQUEST JSON
+{
+	type:'writehighscore',
+	name: STRING,
+	ms: INT
+}
+RESONSE JSON/STRING
+{
+	html: STRING (HTML mit Liste)
+}
+
+// ----------------------
+	ZEIGE HIGHSCORE
+-----------------------//
+REQUEST JSON
+{
+	type:'showhighscore',
+}
+RESONSE JSON/STRING
+{
+	html: STRING (HTML mit Liste)
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.help.gv.at/xml/strukturdaten/#20060626" targetNamespace="http://www.help.gv.at/xml/strukturdaten/#20060626">
+	<element name="strukturdaten" type="tns:StrukturdatenType"/>
+	<complexType name="StrukturdatenType">
+		<choice>
+			<element name="metadaten" type="tns:MetaDatenType" maxOccurs="unbounded"/>
+			<element name="daten" type="tns:DatenType"/>
+		</choice>
+	</complexType>
+	<complexType name="MetaDatenType">
+		<sequence>
+			<element name="letzteaenderung" type="dateTime"/>
+			<element name="datenstruktur" type="tns:DatenstrukturType"/>
+		</sequence>
+		<attribute name="datenname" type="string" use="required"/>
+		<attribute name="datenuri" type="anyURI" use="required"/>
+	</complexType>
+	<complexType name="DatenstrukturType">
+		<sequence maxOccurs="unbounded" minOccurs="1">
+			<element name="elementname">
+				<complexType>
+					<simpleContent>
+						<extension base="string">
+							<attribute name="datatype" type="string" use="required"/>
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="DatenType">
+		<sequence>
+			<element name="datensatz" maxOccurs="unbounded" minOccurs="0">
+				<complexType>
+					<sequence maxOccurs="unbounded" minOccurs="1">
+						<element name="element" type="string"/>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+</schema>

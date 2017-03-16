@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+$( document ).on( 'click', '#wrapper', function(e) {
+	var x = e.pageX - $('#wrapper').offset().left;
+	var y = e.pageY - $('#wrapper').offset().top;
+	$( '<i>' ).css({top:y,left:x}).appendTo( '#wrapper' );
+
+});
+	</script>
+	<style>
+	* { margin:0; padding:0; }
+	body { padding:100px; }
+	#wrapper {margin:0px; position:relative; width:3000px; height:3000px; border:1px solid #000; }
+	#wrapper i { display:inline-block; width:6px; height:6px; background:red; border-radius:50%; margin:-3px 0 0 -3px; position:absolute; }
+
+	</style>
+</head>
+<body>
+<div id="wrapper">
+
+
+</div>
+
+</body>
+</html>
