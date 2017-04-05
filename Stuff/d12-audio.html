@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script src="uislider/jquery-ui.min.js"></script>
+	<script>
+$( document ).ready( function() {
+	$( '#slider' ).slider({
+		slide:function(e,ui) {
+			$( '#testaudio' ).get(0).volume = ui.value / 100;
+		}
+
+	});
+});
+
+$( document ).on( 'click', '.icon-play3', function() {
+
+	$( '#testaudio' ).get(0).play();
+
+});
+$( document ).on( 'click', '.icon-stop2', function() {
+
+	$( '#testaudio' ).get(0).pause();
+	$( '#testaudio' ).get(0).currentTime = 0;
+
+});
+	</script>
+	<link rel="stylesheet" href="icomoon/style.css">
+	<link rel="stylesheet" href="uislider/jquery-ui.min.css">
+	<link rel="stylesheet" href="uislider/jquery-ui.theme.min.css">
+
+	<style>
+	button { background:transparent; border:none; font-size:3em; cursor:pointer; }
+	button span { font-family:Arial; }
+	</style>
+</head>
+<body>
+	<button class="icon-play3"><span>Play</span></button><button class="icon-stop2"><span>Stop</span></button>
+	<audio id="testaudio" controls>
+		<source src="av/drums.mp3">
+	</audio>
+	<div id="slider"></div>
+</body>
+</html>

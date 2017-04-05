@@ -1,0 +1,57 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?xd24v3');
+  src:  url('fonts/icomoon.eot?xd24v3#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?xd24v3') format('truetype'),
+    url('fonts/icomoon.woff?xd24v3') format('woff'),
+    url('fonts/icomoon.svg?xd24v3#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-play3:before {
+  content: "\70";
+}
+.icon-pause2:before {
+  content: "\61";
+}
+.icon-stop2:before {
+  content: "\73";
+}
+.icon-first:before {
+  content: "\78";
+}
+.icon-last:before {
+  content: "\68";
+}
+.icon-volume-high:before {
+  content: "\79";
+}
+.icon-volume-medium:before {
+  content: "\67";
+}
+.icon-volume-low:before {
+  content: "\6c";
+}
+.icon-volume-mute:before {
+  content: "\71";
+}
+.icon-volume-mute2:before {
+  content: "\77";
+}
+

@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script src="jquery-ui.min.js"></script>
+	<script src="make-nice-checkbox.js"></script>
+	<script>
+	var vol = 0;
+
+	$(document).ready(function () {
+		/*$('input[type="checkbox"]').makeNiceCheckbox().on('changeCheck',function(){
+			
+		});*/
+
+		$('#slider').slider({
+			value: 10,
+			slide:function (e,ui) {
+				$('audio').get(0).volume = ui.value / 100;
+				$('audio').get(1).volume = ui.value / 100;
+				$('audio').get(2).volume = ui.value / 100;
+				vol = ui.value / 100;
+				return vol;
+				//console.log(vol);
+			}
+		});
+		console.log(vol);
+	});
+
+	$(document).on('click', '.icon-play3', function(){
+		$('audio').get(0).play();
+		$('audio').get(0).muted = true;
+		$('audio').get(0).loop = true;
+		$('audio').get(1).play();
+		$('audio').get(1).muted = true;
+		$('audio').get(1).loop = true;
+		$('audio').get(2).play();
+		$('audio').get(2).muted = true;
+		$('audio').get(2).loop = true;
+	});
+
+	$(document).on('change', 'input', function(){
+		if($('#d').prop('checked')){
+			$('audio').get(0).volume = vol;
+			$('audio').get(0).muted = false;
+		} else{
+			$('audio').get(0).muted = true;
+		}
+		if($('#g').prop('checked')){
+			$('audio').get(1).muted = false;
+		} else{
+			$('audio').get(1).muted = true;
+		}
+		if($('#o').prop('checked')){
+			$('audio').get(2).muted = false;
+		} else{
+			$('audio').get(2).muted = true;
+		}
+	})
+
+	$(document).on('click', '.icon-stop2', function(){
+		$('audio').get(0).pause();
+		$('audio').get(0).currentTime=0;
+		$('audio').get(1).pause();
+		$('audio').get(1).currentTime=0;
+		$('audio').get(2).pause();
+		$('audio').get(2).currentTime=0;
+	});
+
+	</script>
+	<link rel="stylesheet" href="font/style.css">
+	<link rel="stylesheet" href="jquery-ui.min.css">
+	<style>
+		button{
+			background: transparent;
+			border: none;
+			font-size: 3em;
+			cursor: pointer;
+		}
+
+		button span{
+			font-family: Arial;
+		}
+
+		#slider{
+			width: 200px;
+		}
+	</style>
+</head>
+<body>
+	<button class="icon-play3"><span>Play</span></button>
+	<button class="icon-stop2"><span>Stop</span></button>
+	<div id="slider"></div>
+
+	<br>
+	<input type="checkbox" id="d">Drums</input>
+	<input type="checkbox" id="g">Guitar</input>
+	<input type="checkbox" id="o">Organ</input>
+	<br>
+
+	<audio controls id="drums">
+		<source src="av/drums.mp3">
+	</audio>
+	<audio controls id="guitar">
+		<source src="av/guitar.mp3">
+	</audio>
+	<audio controls id="organ">
+		<source src="av/organ.mp3">
+	</audio>
+</body>
+</html>

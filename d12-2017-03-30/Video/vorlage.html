@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script src="jquery-ui.min.js"></script>
+	<script src="make-nice-checkbox.js"></script>
+	<script>
+	var videoContent = [
+		{time:'0:00:00.000', src:'av/das-paradies-fuer-wintersportler.jpg', text:''},
+		{time:'0:00:02.000', src:'av/endlos-weite-schwuenge-ueber-perfekt-praeparierte-pisten-ziehen.jpg', text:''},
+		{time:'0:00:03.500', src:'av/erlebnishotel-fendels-familienhit.jpg', text:''}
+	];
+
+	$(document).ready(function () {
+		$('#slider').slider({
+			min:0.25,
+			max: 4,
+			value: 1,
+			slide:function (e,ui) {
+				$('video').get(0).playback = ui.value;
+			}
+		});
+
+
+		$('video').each(function () {
+			this.muted = true;
+			this.autoplay = true;
+			this.loop = true;
+
+			var getSec = function (s) {
+				var temp = s.split(':');
+				return temp[2]*1+temp[1]*60+temp[0]*3600;
+			}
+
+			this.ontimeupdate = function () {
+				for (var i = 0; i <videoContent.length; i++){
+					if(getSec(videoContent[i].time) > this.currentTime) break;
+				}
+				if(i > 0 ){
+					$('#overlay').html('<img src="'+videoContent[i-1].src+'">');
+				}
+
+				//console.log(this.currentTime);
+
+			}
+		})
+
+
+	});
+
+	//Play
+
+	//Stop
+
+	//Slider
+
+	//
+
+	</script>
+	<link rel="stylesheet" href="font/style.css">
+	<link rel="stylesheet" href="jquery-ui.min.css">
+	<style>
+	*{
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+	}
+
+	#bgvideo{
+		position: fixed;
+		top: -50%;
+		left: -50%;
+		width: 200%;
+		height: 200%;
+		z-index: -1;
+	}
+
+		video{
+			pointer-events: none;
+			min-width: 50%;
+			min-height: 70%;
+			position: absolute;
+			top: 0;
+			left:0;
+			bottom: 0;
+			right: 0;
+			margin: auto;
+		}
+
+		button{
+			background: transparent;
+			border: none;
+			font-size: 3em;
+			cursor: pointer;
+		}
+
+		button span{
+			font-family: Arial;
+		}
+
+		#slider{
+			width: 200px;
+		}
+
+		#overlay{
+			position: absolute;
+
+		}
+
+		#overlay img{
+			max-width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<button class="icon-play3"><span>Play</span></button>
+	<button class="icon-stop2"><span>Stop</span></button>
+	<div id="slider"></div>
+	<div id="bgvideo">
+		<video>
+			<source src="av/Pitztaler Gletscher.mp4">
+		</video>
+	</div>
+	<div id="overlay"></div>
+</body>
+</html>

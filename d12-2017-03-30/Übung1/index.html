@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<!--<script src="https://maps.googleapis.com/maps/api/js?callback=geoPromise" defer></script>-->
+	<script>
+
+	var geoPromise = new Promise(function(resolve, reject) {
+		//asynchrone script
+		if (navigator.geolocation) {
+			var timeout = setTimeout(function(){reject('Timeout.');},5000);
+
+			if(navigator.userAgent.indexOf('Firefox') == -1){
+				clearTimeout(timeout);
+			}
+
+			navigator.geolocation.getCurrentPosition(
+				function(pos){
+					clearTimeout(timeout);
+					resolve({lat:pos.coords.latitude, lng:pos.coords.longitude});
+				},
+				function(){
+					clearTimeout(timeout);
+					reject('keine Zustimmung');
+				}
+			);
+		} else{
+			reject('Browser untreschützt keine Geolocation');
+		}
+	});
+
+	$(document).ready(function(){
+		geoPromise.then(function(latlng){
+			$('#ausgabe').html('LAT: ' +latlng.lat + '<br>LNG: '+latlng.lng);
+		})
+			.catch(function(err){
+				$('#ausgabe').html(err);
+			})
+	});
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<div id="ausgabe">
+	</div>
+</body>
+</html>

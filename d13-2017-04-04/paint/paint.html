@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mobile Paint</title>
+<style>
+* { margin:0; padding:0; }
+ul { list-style:none; }
+li { float:left;  }
+ul a { color:#000000; text-decoration:none; border:1px solid #000; height:20px; padding:5px; display:block; }
+canvas { vertical-align:bottom; }
+#overlay { position:absolute; top:0; left:0; bottom:0; right:0; background:rgba(0,0,0,0.9); display:none; overflow:auto; padding:20px; }
+#overlay img { height:200px; margin:10px; background:#fff; }
+</style>
+<script src="jquery-3.1.1.min.js"></script>
+<script>
+
+/*
+	Aufgabe A (25%)
+
+	In dem bereitgestellten Script sind 7 Fehler enthalten.
+	Werden alle Fehler beseitigt, kann bei Aufruf der Seite am Bildschirm nach
+	Auswahl der Farbe (unten) gemalt werden.
+
+*/
+
+/*
+	Aufgabe B (25%)
+
+	Bei Klick auf Button "SAVE" Inhalt des Canvas als Data URI per AJAX
+	an http://wifi.1av.at/516/<<<vorname>>>/save.php senden
+	type: POST
+	data: {image: .... }
+
+	Bei Erfolg antwortet der Server mit dem Dateinamen der gespeicherten Datei.
+	Bei Fehler mit "ERROR"
+
+	Nach Erfolg eine Meldung "Bild gespeichert!" ausgeben (mit alert ist ausreichend!)
+	und den Canvas leeren (siehe CLEAR Button)
+
+*/
+
+/*
+	Aufgabe C (25%)
+
+	neuer Button "SHOW" einfügen
+	Lade Inhalt von http://wifi.1av.at/516/<<<vorname>>>/show.php mit AJAX und stelle
+	Bilder in einem Overlay dar.
+
+	neuer Button "SHOW" einfügen
+	Lade Inhalt von http://wifi.1av.at/516/<<<vorname>>>/show.php mit AJAX und stelle
+	Bilder in dem vorhandenen Overlay-DIV dar.
+	Achtung: show.php liefert HTML-Code einer kompletten Seite, mit folgendem Befehl
+	kann aus dem Response-HTML ein Array an Image-URLs erzeugt werden.
+
+	respond =  respond.replace(/(\r\n|\n|\r)/gm,"").match(/<img src="(.*?)"><\/a>/g).map(function(val){
+		   return val.replace(/"><\/a>/g,'').replace(/<img src="/g,'');
+	});
+
+*/
+
+/*
+	Aufgabe D (25%)
+
+	Die Funktionalität Zeichnen soll auch auf Touchscreens ermöglicht werden.
+	Anmerkung: Touch und Mausevents soll beides funktionieren!
+
+
+*/
+
+$(document).ready(function() {
+
+	colorbuttons();
+	sizebuttons();
+	createcanvas();
+
+	console.log( 'DOM Ready' );
+
+});
+
+colorbuttons = function() {
+	$('a[data-color]').each( function() {
+		$(this).css({background: $(this).attr('data-color')});
+	});
+}
+
+
+createcanvas = function() {
+
+	$('#canvaswrapper').html('')
+		.append( $('<canvas width="'+$(window).width()+'" height="'+($(window).height()-32)+'" id="mycan"></canvas>' ) );
+
+}
+$(window).on( 'resize', createcanvas );
+
+
+sizebuttons = function() {
+	$( 'a[data-btn=save]' ).css({width:'auto'});
+
+	var w = $(window).width();
+	var h = $(window).height();
+
+	var b_clear = $( 'a[data-btn=clear]' ).width()+12;
+	var b_save = $( 'a[data-btn=save]' ).width()+12;
+	var b_show = $( 'a[data-btn=show]' ).width()+12;
+
+	var anz_colorbtn = $( 'a[data-btn=color]' ).length;
+
+	var sizebtn = (w-b_clear-b_save-b_show)/anz_colorbtn;
+	sizebtn-=12;
+
+	$( 'a[data-btn=color]' ).css({width:Math.floor(sizebtn)});
+	$( 'a[data-btn=save]' ).css({width:  b_save-13 + (sizebtn - Math.floor(sizebtn))*anz_colorbtn  });
+	//$( 'a[data-btn=save]' ).css({width:  b_save-13 + (sizebtn - Math.floor(sizebtn))*anz_colorbtn  });
+
+}
+$(window).on( 'resize', sizebuttons );
+
+
+window.activeColor = '';
+$(document).on( 'click', 'a[data-btn=color]', function() {
+
+	window.activeColor = $(this).attr( 'data-color' );
+	resetactivebtn();
+	$(this).css({ height:40, 'margin-top':-20});
+});
+
+resetactivebtn = function() {
+	$('a[data-btn=color]').css({ height:20, 'margin-top':0});
+}
+
+clearcanvas = function() {
+	resetactivebtn();
+	window.activeColor = '';
+	createcanvas();
+}
+
+$(document).on( 'click', 'a[data-btn=clear]', clearcanvas );
+
+$(document).on( 'click', 'a[data-btn=save]', function () {
+	var dataURL = $('#mycan').get(0).toDataURL();
+	$.ajax({
+		url:'http://wifi.1av.at/516/anna/save.php',
+		method:'POST',
+		data: { image: dataURL }
+	}).done(function (response) {
+		var dataname = 'Das Bild wurde unter '+ response +' gespeichert'
+		alert(dataname);
+		clearcanvas();
+	}).fail(function (response) {
+ 		var error = 'Error: Bild konnte nicht gespeichert werden'
+		alert(error);
+	});
+});
+
+$(document).on( 'click', 'a[data-btn=show]', function () {
+	var dataURL = $('#mycan').get(0).toDataURL();
+	$.ajax({
+		url:'http://wifi.1av.at/516/anna/show.php',
+		method:'GET'
+	}).done(function (respond) {
+		respond =  respond.replace(/(\r\n|\n|\r)/gm,"").match(/<img src="(.*?)"><\/a>/g).map(function(val){
+				 return val.replace(/"><\/a>/g,'').replace(/<img src="/g,'');
+		});
+		console.log(respond);
+		return respond;
+	}).fail(function (respond) {
+ 		var error = 'Error: Gallery konnte nicht geladen werden'
+		alert(error);
+	});
+});
+
+
+window.drawing = false;
+window.px = false;
+window.py = false;
+window.dotsize = 10;
+$(document).on( 'mousedown', '#mycan', function(e) {
+	e.preventDefault();
+	window.drawing=true;
+	draw(e);
+} );
+$(document).on( 'mousemove', '#mycan', function(e) {
+	e.preventDefault();
+	draw(e);
+} );
+$(document).on( 'mouseup', '#mycan', function(e) {
+	window.drawing = false;
+	e.preventDefault();
+} );
+
+var draw = function(e) {
+	if ( window.activeColor == '' || !window.drawing ) return false;
+	var x = e.pageX;
+	var y = e.pageY;
+	sizedot(x,y);
+	window.px = x;
+	window.py = y;
+	var ctx = $('#mycan').get(0).getContext('2d');
+	ctx.beginPath();
+	ctx.fillStyle = window.activeColor;
+	ctx.arc(x, y, window.dotsize, 0, 2*Math.PI);
+	ctx.fill();
+	ctx.closePath();
+}
+
+$(document).on( 'click','#overlay', function() {
+	$( '#overlay' ).hide();
+});
+
+
+sizedot = function(x,y) {
+	var dist = Math.sqrt(Math.pow(x-window.px, 2)+Math.pow(y-window.py, 2)  );
+	if( x && y &&  dist < 2 &&  window.dotsize<50 )  window.dotsize++;
+	if ( !x || !y || dist > 10 ) window.dotsize = 10;
+
+}
+
+</script>
+</head>
+
+<body>
+<div id="canvaswrapper"></div>
+<div id="overlay"></div>
+<ul id="buttons">
+	<li><a href="#" data-btn="color" data-color="#000000"></a></li>
+	<li><a href="#" data-btn="color" data-color="#FF0000"></a></li>
+	<li><a href="#" data-btn="color" data-color="#00FF00"></a></li>
+	<li><a href="#" data-btn="color" data-color="#0000FF"></a></li>
+	<li><a href="#" data-btn="color" data-color="#FFFF00"></a></li>
+	<li><a href="#" data-btn="color" data-color="#FF00FF"></a></li>
+	<li><a href="#" data-btn="color" data-color="#00FFFF"></a></li>
+	<li><a href="#" data-btn="clear">CLEAR</a></li>
+	<li><a href="#" data-btn="save">SAVE</a></li>
+	<li><a href="#" data-btn="show">SHOW</a></li>
+</ul>
+
+</body>
+</html>

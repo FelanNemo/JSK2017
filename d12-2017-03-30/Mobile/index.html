@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<script src="jquery-3.1.1.min.js"></script>
+	<!--<script src="https://maps.googleapis.com/maps/api/js?callback=geoPromise" defer></script>-->
+	<script>
+	/*
+		click
+		mousedown
+		mouseup
+		mousemove
+		mouseover
+		mouseout
+		mouseenter
+		mouseleave
+
+		touchstart
+		touchend
+		touchmove
+
+		deviceorientation
+		devicenotion
+	*/
+	var imageContent = [
+		{src:'av/das-paradies-fuer-wintersportler.jpg', text:''},
+		{src:'av/endlos-weite-schwuenge-ueber-perfekt-praeparierte-pisten-ziehen.jpg', text:''},
+		{src:'av/erlebnishotel-fendels-familienhit.jpg', text:''}
+	];
+
+	imageContent.i = 0;
+
+	//Bedingte Anweißung vorm : erfüllt nach : kommt else
+	var clickEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
+	$(document).ready(function(){
+
+	});
+
+	$(document).on('touchend', '#bilder img', function (e) {
+		var clientX = e.originalEvent.changedTouches[0].clientX;
+		console.log(clientX,$(this).data('touchstartX'));
+		if(clientX - $(this).data('touchstartX') > 0 ){
+			//nach rechts
+			$(this).trigger('nachrechts');
+		} else{
+			//nach links
+			$(this).trigger('nachlinks');
+		}
+	});
+
+	$(document).on('nachrechts', '#bilder img', function (e) {
+		imageContent.i--;
+		if(imageContent.i == imageContent.length) imageContent.i++;
+		$('#bilder img').attr('src', imageContent[imageContent.i].src);
+	});
+
+	$(document).on('nachlinks', '#bilder img', function (e) {
+		imageContent.i++;
+		if(imageContent.i == imageContent.length) imageContent.i--;
+		$('#bilder img').attr('src', imageContent[imageContent.i].src);
+	});
+
+	$(document).on(clickEvent, '#bilder img', function (e) {
+		var clientX = e.clientX || e.originalEvent.targetTouches[0].clientX;
+
+		if(clickEvent == 'touchstart'){
+			$(this).data('touchstartX',clientX);
+			console.log($(this).data('touchstartX'));
+			return false;
+		}
+
+		//click
+		if (clientX - $(this).offset().left > 200){
+			imageContent.i++;
+			if(imageContent.i == imageContent.length) imageContent.i--;
+		} else {
+			imageContent.i--;
+			if(imageContent.i < 0) imageContent.i++;
+		}
+
+		$('#bilder img').attr('src', imageContent[imageContent.i].src);
+	});
+
+	</script>
+	<style>
+	#bilder{
+		width: 400px;
+		height: auto;
+	}
+	</style>
+</head>
+<body>
+	<div id="bilder">
+		<img src="av/das-paradies-fuer-wintersportler.jpg">
+	</div>
+</body>
+</html>

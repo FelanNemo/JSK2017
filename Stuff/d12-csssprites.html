@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+var bgPosX = 0;
+var bgPosY = 0;
+
+var activeSlot;
+$( document ).on( 'touchstart', '.slot', function(e) {
+	if ( activeSlot ) { return false; } // if already one turns make nothing
+	activeSlot = this; // set activeslot
+	activeSlot.y = e.originalEvent.targetTouches[0].clientY; // get start Y position
+	activeSlot.start = Date.now(); // get start time
+});
+$( document ).on( 'touchend', function(e) { // touch end anywhere on screen
+	if ( !activeSlot ) return; // if no start on slot make nothing
+	activeSlot.dist = activeSlot.y - e.originalEvent.changedTouches[0].clientY; // calculate distance
+	activeSlot.time = Date.now() - activeSlot.start; // calculate timedifference start end touch
+	activeSlot.v = Math.abs(activeSlot.dist)/activeSlot.time * 5; // velocity multiply with factor
+	activeSlot.c = 0; // steps runner
+	if ( activeSlot.v > 1 ) { // trigger only at minimum speed
+		$( activeSlot ).trigger( 'swipeit' );
+	} else { // or die
+		activeSlot = null;
+	}
+});
+
+var moveSlot = function() {
+	activeSlot.c++;
+	bgPosX-= 480/7;
+	if ( bgPosX < -412 ) {
+		bgPosY -= 200;
+		bgPosX = 0;
+	}
+	$(activeSlot).css({
+		backgroundPosition: bgPosX+'px '+bgPosY+'px'
+	})
+
+	activeSlot.v -= 0.05; // reduce velocity
+	if ( activeSlot.v > 0.1 ) {
+		// another step
+		setTimeout( moveSlot, 20/activeSlot.v )
+	} else {
+		//speed to slow, end turn
+		if ( activeSlot.c%2 == 1 ) {
+			// slot stops between, make one more step
+			setTimeout( moveSlot, 100 );
+		}	else {
+			// no slot is active
+			activeSlot = null;
+		}
+	}
+}
+
+$( document ).on( 'swipeit', '.slot', moveSlot);
+
+// just to size slot on screen, min-width 320
+var fixMachineSize = function() {
+	var w = $(window).width();
+	var faktor =  Math.max(320,w)/3/88;
+	$( '#slotmachine' ).css({
+		transform: 'scale('+faktor+','+faktor+')'
+	});
+}
+$( document ).ready(fixMachineSize);
+$( window ).on( 'resize', fixMachineSize);
+
+	</script>
+	<style>
+	* { margin:0; padding:0; }
+.slot {
+	background:url( av/reelSpin-480x400.png );
+	display:inline-block;
+	width:68px;
+	height:200px;
+	margin:10px;
+}
+body { min-width:320px; }
+#slotmachine {
+	display:inline-block;
+	transform-origin:0 0;
+
+}
+#attention { display:none; }
+@media screen and (orientation:landscape) {
+	#attention { display:block; position:fixed; top:0; left:0; bottom:0; right:0; background:#fff; z-index:99; font-size:100px; color:red;}
+}
+	</style>
+</head>
+<body>
+	<div id="attention">dreh um!</div>
+	<div id="slotmachine">
+	<div class="slot"></div><div class="slot"></div><div class="slot"></div>
+	</div>
+<!--<img src="av/reelSpin-480x400.png">-->
+</body>
+</html>

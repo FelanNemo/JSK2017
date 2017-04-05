@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+/*
+	click
+	mousedown
+	mouseup
+	mousemove
+	mouseover
+	mouseout
+	mouseenter
+	mouseleave
+
+	touchstart
+	touchmove
+	touchend
+
+	deviceorientation
+	devicemotion
+
+	*/
+	var imageContent = [
+		{ src:'av/das-paradies-fuer-wintersportler.jpg',text:'' },
+		{ src:'av/endlos-weite-schwuenge-ueber-perfekt-praeparierte-pisten-ziehen.jpg',text:'' },
+		{ src:'av/erlebnishotel-fendels-familienhit.jpg',text:'' },
+	];
+imageContent.i = 0;
+
+var clickEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
+
+$( document ).on( 'touchend' , '#bilder img', function(e) {
+	var clientX = e.originalEvent.changedTouches[0].clientX;
+	if ( clientX - $( this ).data('touchstartX') > 50 ) {
+			//nach rechts
+			$( this ).trigger( 'nachrechts' );
+	} else if ( clientX - $( this ).data('touchstartX') < 50 ) {
+		//nach links
+		$( this ).trigger( 'nachlinks' );
+	}
+});
+
+
+$( document ).on( 'nachrechts' , '#bilder img', function(e) {
+	imageContent.i--;
+	if ( imageContent.i < 0 ) imageContent.i++;
+	$( '#bilder img' ).attr('src', imageContent[ imageContent.i ].src )
+});
+
+$( document ).on( 'nachlinks' , '#bilder img', function(e) {
+	imageContent.i++;
+	if ( imageContent.i == imageContent.length ) 	imageContent.i--;
+	$( '#bilder img' ).attr('src', imageContent[ imageContent.i ].src )
+});
+
+$( document ).on( clickEvent , '#bilder img', function(e) {
+	var clientX = e.clientX || e.originalEvent.targetTouches[0].clientX;
+
+	if ( clickEvent == 'touchstart' ) {
+		$( this ).data('touchstartX', clientX );
+		return false;
+	}
+
+	// click
+	if ( clientX - $(this).offset().left > 200 ) {
+		$( this ).trigger( 'nachlinks' );
+	} else {
+		$( this ).trigger( 'nachrechts' );
+	}
+	$( '#bilder img' ).attr('src', imageContent[ imageContent.i ].src )
+} );
+
+	</script>
+	<style>
+#bilder img { width:400px; height:auto; }
+	</style>
+</head>
+<body>
+<div id="bilder">
+	<img src="av/das-paradies-fuer-wintersportler.jpg">
+</div>
+
+</body>
+</html>

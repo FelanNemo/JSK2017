@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+
+var getMyContext = function( c ) {
+	var ctx = c.getContext( '2d' );
+	ctx.rotateDeg = function( deg ) {
+		ctx.rotate( deg/180*Math.PI );
+	}
+	return ctx;
+}
+
+var i = 0;
+
+var drawCoolStuff = function() {
+	var canvas = $( 'canvas' ).get(0);
+	//var ctx = canvas.getContext( '2d' );
+	var ctx = getMyContext( canvas );
+
+	ctx.clearRect(0,0,200,200);
+
+	ctx.fillStyle = 'red';
+	ctx.fillRect(50,50,100,100);
+
+	ctx.strokeStyle = 'green';
+	ctx.fillStyle = 'rgba(0,0,0,0.5)';
+	ctx.lineWidth = 8;
+	ctx.moveTo(25,25);
+	ctx.lineTo(175,175);
+	ctx.lineTo(175,25);
+	/*ctx.lineTo(25,25);*/
+	ctx.closePath();
+	ctx.stroke();
+	ctx.fill();
+
+	i++;
+
+
+	var verlauf = ctx.createLinearGradient( 0+i,0,50+i,0 );
+	verlauf.addColorStop(0,'blue');
+	verlauf.addColorStop(1,'pink');
+
+	ctx.fillStyle = verlauf;
+
+
+	ctx.beginPath();
+	ctx.arc( 25+i,175-i, 25, 0, 2*Math.PI );
+	ctx.closePath();
+	ctx.stroke();
+	ctx.fill();
+
+	ctx.fillStyle = 'rgba(0,0,0,0.5)';
+
+	ctx.strokeStyle = 'black';
+	ctx.lineWidth=1;
+	ctx.beginPath();
+	ctx.moveTo(0,100);
+	ctx.lineTo(200,100);
+	ctx.stroke();
+
+	ctx.font = '30px Arial';
+	ctx.fillText( 'WIFI Wien g', 0, 100 );
+	ctx.strokeText( 'WIFI', 0, 100 );
+
+	//ctx.translate(100,100);
+	//ctx.rotate( 0.5*Math.PI );
+	//ctx.rotateDeg( 45 );
+
+	var imageObjekt = new Image();
+	imageObjekt.src = 'http://orf.at/static/images/site/news/20170313/malediven_saudi_arabien_atoll_1k_gy.4746198.jpg';
+	imageObjekt.onload = function() {
+		/*ctx.drawImage( imageObjekt,0,0 );*/
+	}
+
+
+
+}
+
+$( document ).ready(function() {
+	"use strict";
+	setInterval( drawCoolStuff, 40);
+
+});
+
+	</script>
+	<style>
+	/*body { background:yellow; }*/
+canvas { border:1px solid red; /*transform:rotate(90deg);*/}
+	</style>
+</head>
+<body>
+
+<canvas width="200" height="200"></canvas>
+<!-- <img src="bmi_tabelle.gif"> -->
+</body>
+</html>

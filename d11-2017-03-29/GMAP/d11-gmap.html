@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?callback=machKarte" defer></script>
+	<script>
+	var machKarte = function() {
+
+		var karte = new google.maps.Map( $('#meineMap').get(0), {
+			zoom:8,
+			center:{lat:0,lng:0}
+		});
+
+		try {
+			navigator.geolocation.getCurrentPosition(function( positionClient ) {
+				//console.log( positionClient );
+				var pos = {
+					lat:positionClient.coords.latitude,
+					lng:positionClient.coords.longitude
+				};
+
+				karte.setCenter(pos);
+
+				var marker = new google.maps.Marker({
+					position:pos,
+					map:karte
+				})
+
+
+			})
+		} catch(e) {
+			alert( 'Du bist nirgendwo!' );
+		}
+
+
+
+	}
+
+
+$( document ).ready( function() {
+
+	var ctx = $( 'canvas' ).get(0).getContext('2d');
+	ctx.fillStyle = '#000000';
+	ctx.lineWidth = 1;
+	ctx.moveTo(0,50);
+	ctx.lineTo(100,50);
+	ctx.moveTo(50,0);
+	ctx.lineTo(50,100);
+	ctx.stroke();
+
+});
+
+	</script>
+	<style>
+
+* { margin:0; padding:0; }
+
+html, body, #wrapper, #meineMap {
+	width:100%;
+	height:100%;
+}
+
+#wrapper {
+	position:relative;
+}
+canvas {
+	position:absolute;
+	top:calc(50% - 50px);
+	left:calc(50% - 50px);
+	pointer-events:none;
+}
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+			<div id="meineMap"></div>
+			<canvas width="100" height="100"></canvas>
+  </div>
+</body>
+</html>

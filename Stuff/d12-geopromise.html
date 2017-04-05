@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+
+var geoPromise = new Promise( function( gut, schlecht ) {
+
+	// asynchrone script
+	//if ( 'geolocation' in navigator ) {}
+	if ( navigator.geolocation ) {
+		var timeout = setTimeout( function() { schlecht('Timeout.'); }, 5000 );
+		if ( navigator.userAgent.indexOf( 'Firefox' ) == -1 ) clearTimeout( timeout );
+		navigator.geolocation.getCurrentPosition(
+			function(pos){
+				clearTimeout( timeout );
+				gut({lat:pos.coords.latitude, lng:pos.coords.longitude});
+			},
+			function(){
+				clearTimeout( timeout );
+				schlecht( 'keine Zustimmung' );
+			}
+		);
+	} else {
+		schlecht( 'Browser unterstützt keine Geolocation.' );
+	}
+
+
+} );
+
+
+$( document ).ready( function() {
+
+	geoPromise.then(function(latlng){
+		$('#ausgabe').html( 'LAT: '+latlng.lat+'<br>LNG: '+latlng.lng);
+	}).catch(function(err){ $('#ausgabe').html(err); });
+
+});
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+
+<div id="ausgabe"></div>
+
+</body>
+</html>

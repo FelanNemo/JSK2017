@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		var canvas =$('canvas').get(0);
+		//holt sich den Inhalt als 2d
+		var ctx = canvas.getContext('2d');
+		//Farbverlauf
+		//Startpunkt, Endpunt
+		var verlauf = ctx.createLinearGradient(0,0,200,0);
+		//Farbe zum Verlauf hinzufügetContext
+		//pos im Verlauf (geht von 0 bis 1), farbe
+		verlauf.addColorStop(0,'blue');
+		verlauf.addColorStop(1,'pink');
+
+		//Füllfarbe
+		ctx.fillStyle = 'red'
+		//zeichnet ein Rechteck
+		//x,y, breite, höhe
+		ctx.fillRect(50,50,100,100)
+
+		//Farbe der Striche
+		ctx.strokeStyle = 'green';
+		ctx.fillStyle = 'rgba(0,0,0,0.5)';
+		//Stärke des STrichs
+		ctx.lineWidth = 2;
+		//ändert den Ausgangspunkt
+		//x,y
+		ctx.moveTo(25,25);
+		//zeichnet eine Linie
+		//x,y
+		ctx.lineTo(175,175);
+		ctx.lineTo(175,25);
+		//ctx.lineTo(25,25);
+		//schließt die Linien ab, dadurch muss ich das letzte LineTo nicht machen
+		ctx.closePath();
+		//zeichnet dei Linie
+		ctx.stroke();
+		ctx.fill();
+		//starte einen neuen Path
+		ctx.beginPath();
+		ctx.fillStyle = verlauf;
+		//zeichnet Kreise
+		//x,y,Radius, Winkel Start in rad, Winkel Ende in rad
+		ctx.arc(25,175,25,0, 2*Math.PI);
+		ctx.stroke();
+		ctx.fill();
+
+		ctx.strokeStyle = 'black';
+		ctx.beginPath();
+		ctx.moveTo(0,100);
+		ctx.lineTo(200,100);
+		ctx.stroke();
+
+
+		//Font Definieren
+		ctx.font = '30px Arial';
+		//Text "zeichnen"
+		//Text,x,y
+		//geht vom Textfeld links unten
+		ctx.fillText('Wifi Wien', 0, 100);
+		//
+		ctx.strokeText('Wifi', 0,100);
+
+		//Bildeinfügen
+		/*
+		//funktiniert so beim ersten mal nicht da das Bild hier nicht sofort geladen wird
+		//Erzeugt ein ImageObjekt
+		var ImageObjekt = new Image();
+		//ImageObjekt URL
+		ImageObjekt.src=''
+
+		//Über den EventListener Abfragen ob das Bild da ist
+		ImageObjekt.onLoad = function(){
+		//zeichnet das Bild
+		//ImageObjekt ist das Bild, x,y
+		ctx.drawImage(ImageObjekt, 100, 100);
+		}
+		*/
+
+		//Ändert Kordienatenursprung
+		//x,y
+		//ctx.translate(-100,-100);
+		//dreht den Inhalt
+		//Winkel in rad
+		//ctx.rotate(0.5*Math.PI);
+
+		//Animation
+		//siehe Alex BSP
+	});
+
+	</script>
+	<style>
+	body{
+
+	}
+	canvas{
+		border: 1px solid red;
+	}
+	</style>
+</head>
+<body>
+	<canvas width="200" height="200">
+	</canvas>
+
+</body>
+</html>

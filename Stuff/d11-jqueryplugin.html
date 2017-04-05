@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+
+	$( document ).ready( function() {
+
+		$( 'p' ).css({color:'red'});
+
+		var s = 'ABC';
+		$( 'p' ).each( function(i) {
+
+			$(this).html( s[i]).css({background:'#eee'}).makeCoolStuff({setting2:'!',setting1:'*'});
+
+
+		})
+
+
+	});
+
+// BEGIN PLUGIN
+(function($) {
+	"use strict";
+	$.fn.makeCoolStuff = function(options) {
+		var settings = $.extend({
+			setting1:'a',
+			setting2:'b'
+		},options);
+		this.each( function() {
+
+			$(this).html( settings.setting1 + $(this).html() + settings.setting2 );
+
+		});
+		return this;
+	}
+}(jQuery));
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<p>1</p>
+	<p>2</p>
+	<p>3</p>
+</body>
+</html>

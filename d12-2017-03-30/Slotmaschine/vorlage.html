@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+	var interval;
+	var bgPosX = 0;
+	var bgPosY = 0;
+
+	$(document).ready(function () {
+
+	});
+
+	$(document).on('click','.slot',function () {
+		clearInterval(interval)
+		console.log($(this));
+
+		interval = setInterval(function () {
+			bgPosX = (bgPosX - (480/7));
+			if(bgPosX < -(480/7)*6){
+				bgPosY -= 200;
+				bgPosX = 0;
+			}
+			$(this).css({
+				backgroundPosition: bgPosX+'px '+ bgPosY+'px'
+			})
+		},100);
+	});
+
+	</script>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+
+	.slot{
+		background: url(av/reelSpin-480x400.png);
+		display: inline-block;
+		width: calc(480px / 7);
+		height: 200px;
+	}
+
+	html body #reels{
+		margin: auto;
+	}
+
+	#reels{
+		width: calc( (480px / 7)*3.45 );
+	}
+
+
+	</style>
+</head>
+<body>
+	<div id="reels">
+   <div class="slot" width="70" height="300"></div> |
+   <div class="slot" width="70" height="300"></div> |
+   <div class="slot" width="70" height="300"></div> |
+</div>
+</body>
+</html>

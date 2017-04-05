@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+	var anzahlKlicks = 0;
+
+
+	$(document).on('click', 'button', function(e){
+		e.preventDefault();
+		anzahlKlicks++;
+
+		if(anzahlKlicks%3 == 0){
+			$(this).trigger('tripleclick');
+		}
+	});
+
+	$(document).on('tripleclick','button',function(){
+		alert('super');
+	});
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<button>Klick mich 3x</button>
+</body>
+</html>
