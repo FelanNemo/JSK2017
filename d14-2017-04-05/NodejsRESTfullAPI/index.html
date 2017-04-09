@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.0.min.js"></script>
+	<script>
+
+var webserviceURL = 'http://127.0.0.1:3333';
+
+$(document).on('click', '#new', function(e){
+	e.preventDefault();
+	var name = $('#name').val();
+	var gewicht = $('#gewicht').val();
+	var id = 0;
+
+	//for(var i in )
+
+	$.ajax({
+		url: webserviceURL+'/elefanten',
+		type: 'POST',
+		data:{
+			name: name,
+			gewicht: gewicht,
+			id: id
+		},
+		success:function (d) {
+			console.log(d);
+		},
+		error:function (d) {
+			console.error(arguments);
+		}
+	});
+});
+
+$(document).on('click', '#readAll', function(){
+
+});
+
+$(document).on('click', '#readOne', function(){
+
+});
+
+$(document).on('click', '#update', function(){
+
+});
+
+$(document).on('click', '#delete', function(){
+
+});
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<form id="">
+	Name: <input id="name"></input><br>
+	Gewicht: <input id="gewicht"></input><br>
+	<br>
+	Indendifikator*<input id="name"></input>
+<br><br>
+	*Diese Angaben sind nur für vorhandene Datensätze zu verwenden
+<br>
+	<button id="new">Neuen Elefanten anlegen</button><br>
+	<button id="readAll">Alle Elefanten anzeigen</button><br>
+	<button id="readOne">Einen Elefanten anzeigen</button><br>
+	<button id="update">Einen Elefanten updaten</button><br>
+	<button id="delete">Einen Elefanten löschen</button>
+</form>
+</body>
+</html>

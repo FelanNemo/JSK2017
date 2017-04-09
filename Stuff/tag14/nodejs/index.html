@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+$( document ).on( 'click', 'button', function() {
+	var deinName = $( '#deinname' ).val();
+	$( '#deinname' ).val('');
+	$.ajax({
+		url:'http://127.0.0.1:12345/save',
+		type:'POST',
+		data:{name:deinName},
+		success:function(d) {
+			console.log(d);
+			try {
+				d = JSON.parse(d);
+			} catch(e) {}
+			if ( d.saved ) alert( 'Danke.' )
+			else alert( 'Da ging was schief. Wende dich an einen Mitarbeiter.')
+		},
+		error:function() { console.log('Error', arguments); }
+	});
+});
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+Name: <input type="text" id="deinname"><button>Save</button>
+</body>
+</html>

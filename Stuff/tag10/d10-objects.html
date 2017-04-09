@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+$( document ).ready( function() {
+var o = {
+	a:1,
+	b:2,
+	m:function() {
+		console.log( 'o.m', this.a, this.b );
+	}
+}
+
+
+var K = function(p1,p2) {
+	this.a = p1;
+	this.b = p2;
+	this.m = function() {
+		console.log( 'K.m', this.a, this.b );
+	}
+	/*var _t = this;
+	$( '<button>Klick</button>').on( 'click', function() {
+		console.log( 'geklickt', _t.a );
+	}).appendTo( 'body' );*/
+
+	var klickFunktion = function() {
+		console.log( 'geklickt', this.a );
+	}
+	$( '<button>Klick</button>').on( 'click', klickFunktion.bind(this) ).appendTo( 'body' );
+}
+
+var oK = new K(3,4);
+var oK2 = new K(5,6);
+
+K.prototype.m2 = function() {
+	console.log( 'K.m2', this.a, this.b );
+}
+
+//o.m();
+//oK.m();
+//oK2.m2();
+
+
+
+var p = Object.create( o );
+p.a = 3;
+p.m2 = function() {
+	console.log( 'p.m2', this.a, this.b );
+}
+
+
+console.log( p.a, p.b );
+p.m.call( o );
+p.m2.call();
+o.m();
+console.log( p.hasOwnProperty('a'),  p.hasOwnProperty('b') );
+
+console.log( '----- GET/SET ----' );
+var x = {
+		get a() { return this.val; },
+		set a(value ) { this.val = value*2; }
+	};
+
+x.a = 5;
+console.log( x.a );
+
+var o5 = {};
+var o6 = Object.create( Object.prototype );
+var o7 = Object.create( {} );
+var o8 = Object.create( null );
+
+var x2 = Object.create({},{
+	val:{
+		value:0,
+		writable:true,
+		enumerable:false
+	},
+	a:{
+		//value: 5,
+		//writeable: true,
+		enumerable: true,
+		get: function() {
+			var s = this.val + '';
+			return s.replace('.',',');
+		},
+		set: function(value ) { this.val = value*2; }
+	}
+});
+
+
+
+x2.a = 5.3;
+console.log( x2.a );
+
+
+x2.val = 100;
+console.log( x2.a );
+
+for ( var i in x2 ) {
+	console.log( i, x2[i] );
+}
+
+console.log( '----- GET/SET ----' );
+
+var x3 = (function() {
+	var val = 0;
+	return Object.create({},{
+		a:{
+			//value: 5,
+			//writeable: true,
+			enumerable: true,
+			get: function() {
+				var s = val + '';
+				return s.replace('.',',');
+			},
+			set: function(value ) { val = value*2; }
+		}
+	}
+)}());
+
+
+x3.a = 5.3;
+console.log( x3.a );
+
+
+x3.val = 100;
+console.log( x3.a );
+
+for ( var i in x3 ) {
+	console.log( i, x3[i] );
+}
+
+
+})
+
+
+
+function Circle(radius) {
+    this.radius = radius;
+}
+
+Object.defineProperty(Circle.prototype, 'circumference', {
+    get: function() { return 2*Math.PI*this.radius; }
+});
+
+Object.defineProperty(Circle.prototype, 'area', {
+    get: function() { return Math.PI*this.radius*this.radius; }
+});
+
+c = new Circle(10);
+console.log(c.area; // Should output 314.159
+console.log(c.circumference); // Should output 62.832
+
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+</body>
+</html>

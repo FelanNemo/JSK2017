@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+// GET > HTML
+$.ajax( {
+	url:'http://wifi.1av.at/516/alex/r_get_html.php',
+	type:'GET',
+	data:{x:1},
+	dataType:'html', // Angabe nicht notwendig!
+	success:function(d) {
+		d = JSON.parse( d );
+		console.log( '1. GET>HTML', d.x );
+	}
+});
+// GET > JSON
+$.ajax( {
+	url:'http://wifi.1av.at/516/alex/r_get_json.php',
+	type:'GET',
+	data:{x:1},
+	dataType:'json', // Angabe nicht notwendig!
+	success:function(d) {
+		console.log( '2. GET>JSON', d.x );
+	}
+});
+// POST > HTML
+$.ajax( {
+	url:'http://wifi.1av.at/516/alex/r_post_html.php',
+	type:'POST',
+	data:{x:1},
+	success:function(d) {
+		d = JSON.parse( d );
+		console.log( '3. POST>HTML', d.x );
+	}
+});
+// POST > JSON
+$.ajax( {
+	url:'http://wifi.1av.at/516/alex/r_post_json.php',
+	type:'POST',
+	data:{x:1},
+	success:function(d) {
+		console.log( '4. POST>JSON', d.x );
+	}
+});
+// JSON > HTML
+$.ajax( {
+	url:'http://wifi.1av.at/516/alex/r_json_html.php',
+	type:'POST',
+	data:JSON.stringify({x:1}),
+	contentType:'application/json',
+	success:function(d) {
+		d = JSON.parse( d );
+		console.log( '5. JSON>HTML', d.x );
+	}
+});
+// JSON > JSON
+$.ajax( {
+	url:'http://wifi.1av.at/516/alex/r_json_json.php',
+	type:'POST',
+	data:JSON.stringify({x:1}),
+	contentType:'application/json',
+	success:function(d) {
+		console.log( '6. JSON>JSON', d.x );
+	}
+});
+// GET > JSONP
+
+$.ajax( {
+	url:'http://wifi.1av.at/516/alex/r_get_jsonp.php',
+	type:'GET',
+	data:{x:1},
+	dataType:'jsonp',
+	jsonpCallback: 'nameOfCallbackFunction',
+	success:function(d) {
+		console.log( '7. GET>JSONP', d.x );
+	}
+});
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<form action="..." method="post"></form>
+</body>
+</html>

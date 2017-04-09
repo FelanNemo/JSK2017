@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+	<script>
+
+var request = new XMLHttpRequest();
+request.open( 'GET', 'http://wifi.1av.at/516/alex/test.php' );
+request.send();
+request.onreadystatechange = function() {
+	if ( request.readyState == 4 ) {
+		console.log( request.responseText );
+	}
+}
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<form action="..." method="post"></form>
+</body>
+</html>

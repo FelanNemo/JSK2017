@@ -1,0 +1,16 @@
+{
+  "name":"meine 1. ChromAPP",
+  "version": "1.0.0",
+  "manifest_version":2,
+  "minimum_chrome_version": "28",
+  "description":"Kann nichts ist aber cool",
+  "icons":{"128": "icon_128.png"},
+  "app":{
+    "background":{
+      "scripts":["background.js"]
+    }
+  },
+  "permissions":[
+    "storage"
+  ]
+}

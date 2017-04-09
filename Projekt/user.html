@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.0.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+	<script>
+	$(document).on( 'click', '#startGame', function(e) {
+		e.preventDefault();
+		var name = $('#username').val();
+		var gametype= $('#gametype').val();
+		//console.log(name);
+		$('#username').val('');
+
+		$.ajax({
+			url:'http://127.0.0.1:12345/save',
+			method:'POST',
+			data: {
+			name: name,
+			points: 0,
+			gametype: gametype
+		}
+		}).done(function (response) {
+			try {
+				response = JSON.parse(response);
+			} catch (e){}
+
+			if(response.saved){
+				console.log('Datei erstellt');
+				//console.log(response);
+			} else{
+				console.log('Da ging was schief');
+			}
+		}).fail(function (response) {
+			console.log('Error', arguments);
+		});
+	});
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<form id="player">
+		Username:<input id="username" placeholder="Please enter a Username"></input>
+		<br>Gametype: <select name="gametype">
+		</select>
+		<br><button id="startGame">Start Game </button>
+	</form>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "Image Editor",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "minimum_chrome_version": "28",
+  "description" : "Bilder lokal bearbeiten",
+  "icons" : { "128": "drop.png"},
+  "app": {
+    "background": {
+      "scripts": [ "background.js" ]
+    }
+  },
+  "permissions": [
+    "storage",
+    { "fileSystem": [ "retainEntries" ] }
+  ],
+  "file_handlers": {
+    "image": {
+      "types": [ "image/jpg", "image/png"]
+    }
+  }
+}

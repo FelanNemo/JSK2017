@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js" defer></script>
+	<script>
+	//var karte;
+
+	var meineMarker = localStorage.getItem( 'lokaleMarker' );
+	meineMarker = meineMarker ? JSON.parse( meineMarker ) : [];
+
+	var markerListener =  function() {
+		//if ( confirm( 'Bist du dir sicher?') ) {
+			meineMarker.splice( meineMarker.indexOf( this.element), 1);
+			localStorage.setItem( 'lokaleMarker', JSON.stringify(meineMarker) );
+			//location.reload();
+			this.setMap( null );
+		//}
+	}
+
+	var machKarte = function() {
+		console.log( 'macheKarte' );
+		var karte = new google.maps.Map( $('#meineMap').get(0), {
+			zoom:8,
+			center:{lat:0,lng:0}
+		});
+
+		var meineBounds = new google.maps.LatLngBounds();
+
+		for ( var i in meineMarker ) {
+			var marker = new google.maps.Marker({
+				position:meineMarker[i],
+				map:karte
+			});
+			marker.element = meineMarker[i] ;
+			//(function( element ){
+			marker.addListener( 'click',markerListener);
+			//}( meineMarker[i] ));
+			meineBounds.extend( meineMarker[i] );
+		}
+
+		karte.fitBounds( meineBounds );
+
+		/*try {
+			navigator.geolocation.getCurrentPosition(function( positionClient ) {
+				//console.log( positionClient );
+				var pos = {
+					lat:positionClient.coords.latitude,
+					lng:positionClient.coords.longitude
+				};
+
+				karte.setCenter(pos);
+
+				var marker = new google.maps.Marker({
+					position:pos,
+					map:karte
+				})
+
+
+			})
+		} catch(e) {
+			alert( 'Du bist nirgendwo!' );
+		}*/
+
+		$( document ).on('click','#save button',function(e) {
+			e.preventDefault();
+			var name = $( '#save input' ).val();
+			if ( name == '' ) {
+				alert( 'ERROR' );
+				return false;
+			}
+			// getCenter of MAP ?
+			var latlng = karte.getCenter().toJSON();
+			latlng.name = name;
+			var marker = new google.maps.Marker({
+				position:latlng,
+				map:karte
+			})
+			meineMarker.push( latlng );
+			marker.element = latlng;
+			//(function( element ){
+			marker.addListener( 'click',markerListener);
+
+			localStorage.setItem( 'lokaleMarker', JSON.stringify(meineMarker) );
+
+		});
+
+
+
+	}
+
+
+$( document ).ready( function() {
+	console.log( 'DOM ready' );
+	machKarte();
+	var ctx = $( 'canvas' ).get(0).getContext('2d');
+	ctx.fillStyle = '#000000';
+	ctx.lineWidth = 1;
+	ctx.moveTo(0,50);
+	ctx.lineTo(100,50);
+	ctx.moveTo(50,0);
+	ctx.lineTo(50,100);
+	ctx.stroke();
+
+});
+
+
+	</script>
+	<style>
+
+* { margin:0; padding:0; }
+
+html, body, #wrapper, #meineMap {
+	width:100%;
+	height:100%;
+}
+
+#wrapper {
+	position:relative;
+}
+canvas {
+	position:absolute;
+	top:calc(50% - 50px);
+	left:calc(50% - 50px);
+	pointer-events:none;
+}
+
+#save {
+	position:fixed;
+	right:20px;
+	top:20px;
+	background:#fff;
+	width:300px;
+	padding:20px;
+}
+
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+			<div id="meineMap"></div>
+			<canvas width="100" height="100"></canvas>
+
+			<div id="save">
+				<input type="text" id="name"><button>Save</button>
+			</div>
+
+  </div>
+</body>
+</html>

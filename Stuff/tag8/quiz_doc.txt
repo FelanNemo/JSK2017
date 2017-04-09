@@ -1,0 +1,46 @@
+
+URL: http://wifi.1av.at/tn/quiz.php
+
+/*
+  Anzahl Fragen
+*/
+REQ POST
+{
+  type:"getcount"
+}
+RESP JSON(OBJ)
+{
+  count:INT
+}
+
+/*
+  Frage holen
+*/
+REQ POST
+{
+  type:"getquestion",
+  id:INT
+}
+RESP json
+{
+  question:STRING
+  answers:[
+    STRING,
+    STRING,
+    STRING,
+    STRING
+  ]
+}
+
+/*
+  Antwort richtig?
+*/
+REQ POST
+{
+  type:'check',
+  id:INT
+}
+RESP json
+{
+  answer_id:INT
+}

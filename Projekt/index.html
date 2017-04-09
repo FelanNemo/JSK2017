@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="res/jquery-3.2.0.min.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<script>
+	//$('#countinueGame').attr({ 'disabled':'disabled'});
+
+	//Ist ein Savegame vorhanden?
+	//Wie frage ich hier ab ob savegame vorhanden ist????
+	$.ajax({
+	url:'http://127.0.0.1:12345/button',
+	method:'GET',
+	data: {},
+	succsess: function(response){
+		if(response.da){
+			console.log('Weiterspielen darf aktive sein');
+			$('#countinueGame').attr({ 'disabled':'enabeld'});
+		} else{
+		console.log('Weiterspielen muss deaktiviter sein');
+		$('#countinueGame').attr({ 'disabled':'disabled'});
+		}
+	},
+	error: function(response) {
+		console.log('Error', arguments);
+		//console.log(response);
+	}
+});
+
+	$(document).ready(function(){
+		//w ist die Width des button
+		var w = $('#newGame').width() + 42*1;//42 = padding*2 + border*2
+		$('form').css({'width': w});
+		$('button').css({'width': w});
+
+	});
+
+
+	$(document).on('submit','#player', function(e){
+		e.preventDefault();
+
+		$(document).on('click', 'button', function(e){
+			e.preventDefault();
+			var name = $(this).attr('id');
+			if(name == 'newGame'){
+				//go to User and "start" Server
+				console.log('Neues Spiel');
+			}
+			if(name == 'countinueGame'){
+				//go to game and load elements
+				console.log('Spiele Weiter');
+			}
+		});
+	});
+
+	</script>
+	<style>
+	form{
+	    height: 400px;
+	    margin: auto;
+	}
+
+	button{
+	  background-color: rgba(255,255,255,0.5);
+	  border: 1px solid black;
+	  border-radius: 15px;
+	  padding: 20px;
+	  font-size: 50px;
+	  margin-top: 20px;
+	}
+	</style>
+</head>
+<body>
+	<form id="player">
+		<button id="newGame"><a href="user.html">New Game</a> </button><br>
+		<button id="countinueGame"> Countinue </button>
+	</form>
+</body>
+</html>

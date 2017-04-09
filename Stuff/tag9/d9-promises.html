@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+
+$( document ).ready( function() {
+	/*
+	var meinCountdown = function( x ) {
+		$( '#countdown' ).html( x-- );
+		setTimeout( function() { meinCountdown(x); }, 1000 );
+	}
+	*/
+
+	var meinCountdown = function( x, id, callback ) {
+		var count = function() {
+			$( id ).html( x-- );
+			if ( x >= 0 ) {
+				setTimeout( count, 1000 );
+			} else {
+				if ( typeof callback == 'function' ) callback();
+			}
+		}
+		count();
+	}
+
+	var c = $( '#countdown' ).html() * 1;
+	meinCountdown( c, '#countdown', function() {  $('#countdown').css({color:'#f00'});  } );
+
+	var c2 = $( '#countdown2' ).html() * 1;
+	var c3 = $( '#countdown3' ).html() * 1;
+
+	meinCountdown( c2, '#countdown2', function(){
+		meinCountdown( c3, '#countdown3', function() {
+			meinCountdown( 100, '#countdown2' );
+		});
+	} );
+
+
+
+	/*for (; c>=0; c-- ) {
+		(function(c) {
+			setTimeout( function() {
+				$( '#countdown' ).html( c );
+			}, 10000 - c*1000 );
+		}(c));
+	}*/
+	var x = 1;
+	var pro = new Promise( function(resolve, reject) {
+		if ( x == 1 ) {
+			resolve( 'OK' );
+		} else {
+			reject( 'ERROR' );
+		}
+	});
+
+	pro.catch( function(d) { console.log(d); } ).then( function(d){ alert(d); } );
+
+	var meinCountDownPromise = function( i, id ) {
+		var timeout;
+		return new Promise( function(res,rej) {
+			var count = function() {
+				$( id ).html( i-- );
+				if ( i>=0 ) {
+					timeout = setTimeout( count, 1000 );
+				} else {
+					res();
+				}
+			}
+
+			$( id ).on('click', function(e){
+				clearTimeout( timeout );
+				rej( 'geklickt' );
+			});
+			if ( isNaN(i) || i > 10 ) {
+				rej( 'Start ungültig' );
+			} else {
+				count();
+			}
+		});
+	}
+
+	meinCountDownPromise(3,'#c4')
+		.then( function() { $('#c4').css({color:'#0f0'}); } )
+		.catch( function(d) { alert( 'ERROR:' + d); } )
+
+		/*$( '#btn' ).on( 'click',  function(e) {
+			e.preventDefault();
+
+
+		});	*/
+
+}); // dom ready
+
+$.ajaxSetup({
+	url:'http://wifi.1av.at/516/alex/promisetest.php', // number => x
+	type:'POST',
+	dataType:'json'
+});
+
+$( document ).on( 'click', '#btn', function(e) {
+	e.preventDefault();
+
+	var add10 = function(z,cb) {
+		$.ajax({
+			data:{number:z},
+			success:function( resp ) {
+				cb( resp.x * 1 + 10	);
+			}
+		})
+	}
+
+	var multiply5 = function(z, cb) {
+		$.ajax({
+			data:{number:z},
+			success:function( resp ) {
+				cb( resp.x * 5	);
+			}
+		})
+	}
+
+	add10( 3, function(erg) {
+		multiply5( erg, function(erg) {
+			add10( erg, function(erg) {
+					console.log( erg );
+			})
+		})
+	} );
+
+});
+
+$( document ).on( 'click', '#btn2', function(e) {
+	e.preventDefault();
+
+	var add10 = function( z ) {
+		return new Promise( function(res, rej ) {
+			$.ajax({
+				data:{number:z},
+				success:function(resp) {
+					res( resp.x * 1 + 10 );
+				}
+			})
+		});
+	}
+
+	var multiply5 = function( z ) {
+		return new Promise( function(res, rej ) {
+			$.ajax({
+				data:{number:z},
+				success:function(resp) {
+					res( resp.x * 5 );
+				}
+			})
+		});
+	}
+
+	var sub2 = function( z ) {
+		return new Promise( function(res, rej ) {
+			$.ajax({
+				data:{number:z},
+				success:function(resp) {
+					res( resp.x - 2 );
+				}
+			})
+		});
+	}
+
+	add10(3)
+		.then( multiply5 )
+		.then( sub2 )
+		.then( add10 )
+		.then( console.log );
+
+});
+
+$( document ).on( 'click', '#btn3', function(e) {
+	e.preventDefault();
+
+	var req = function( z ) {
+		return new Promise( function(res,rej) {
+			$.ajax({
+				data:{number:z},
+				success:function(d) {
+					res( d );
+				}
+			})
+		});
+	}
+
+	Promise.all( [req(1),req(2)] )
+		.then( function() { console.log( '1+2 fertig' ); });
+
+
+	//$.when( req(1), req(2) ).done( function() { } )
+
+
+});
+
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<button id="btn">Starte AJAX Calls (ohne Promise)</button>
+	<button id="btn2">Starte AJAX Calls (mit Promise)</button>
+	<button id="btn3">Starte 2 Calls</button>
+	<hr>
+	<div id="countdown">5</div>
+	<div id="countdown2">3</div>
+	<div id="countdown3">10</div>
+	<hr>
+	<div id="c4">5</div>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+Math.randy = function(i,j) { return Math.floor(Math.random()*(j-i+1))+i; }
+
+/*
+
+	START GAME
+
+*/
+var airplanes=[];
+var createNewAirplane = function() {
+	var startAirport = airports[ Math.randy(0,airports.length-1) ], target;
+	do {
+		target = airports[ Math.randy(0,airports.length-1) ];
+	} while( target == startAirport );
+	var plane = new Plane(startAirport.x, startAirport.y);
+	plane.flyTo(target.x+Math.randy(-50,50),target.y+Math.randy(-50,50));
+	plane.target = target;
+	airplanes.push( plane );
+}
+
+var distance = function(p1,p2) {
+		return Math.pow( Math.pow(p1.x-p2.x,2) + Math.pow(p1.y-p2.y,2)  ,0.5);
+}
+
+var checkCollision = function() {
+	for (var i in airplanes ) {
+		var a = airplanes[i];
+		if ( a.speed == 0 ) {continue; }
+		//checkAirport
+		var distAirport = distance({x:a.x,y:a.y},{x:a.target.x,y:a.target.y});
+		if ( distAirport < 15 ) { a.stop(); a.node.remove(); }
+
+		//checkOtherPlanes
+		for ( var j in airplanes ) {
+			var a2 = airplanes[j];
+			if ( a === a2 || a2.speed == 0 ) {continue;}
+			var distAir = distance({x:a.x,y:a.y},{x:a2.x,y:a2.y});
+			if ( distAir < 5 ) {
+				alert( 'GAME OVER!!!!');
+				a.stop();
+				a2.stop();
+			}
+		}
+	}
+
+}
+
+setInterval( checkCollision, 40 );
+
+
+$(document).on('click','#intro button', function(e) {
+		$( '#intro' ).fadeOut();
+		$( '#game' ).fadeIn();
+		$( '#status' ).addClass('active').html( 'flying' );
+		createNewAirplane()
+		setInterval( createNewAirplane, 4000 );
+
+});
+
+var Plane = function(x,y) {
+	this.x = x;
+	this.y = y;
+	this.target = 'ZIELFLUGHAFEN';
+	this.speed = 3;
+	this.speedX = 0;
+	this.speedY = 0;
+	this.alpha = 0;
+	this.node = this.create();
+	this.direction = 0;
+	var i = setInterval( this.fly.bind(this), 40 );
+	this.landed = function() {
+		clearInterval(i);
+	}
+}
+Plane.prototype.create = function() {
+
+	return $('<div class="airplane"></div>')
+		.css({
+			top:this.y,
+			left:this.x
+		})
+		.on( 'click', this.selectPlane.bind( this ) )
+		.appendTo( '#field');
+
+}
+Plane.prototype.selectPlane = function(e) {
+	e.stopPropagation();
+	freeSelection();
+	selectedPlane = this;
+	this.node.addClass( 'selected' );
+	$( '#status' ).html( 'Ziel: ' + this.target.name );
+}
+Plane.prototype.fly = function() {
+	this.x+=this.speedX;
+	this.y+=this.speedY;
+	if ( this.x >= 320 || this.x <= 0 ) { this.speedX *= -1; this.setDirection(); }
+	if ( this.y >= 480 || this.y <= 0 ) { this.speedY *= -1; this.setDirection(); }
+	if ( this.direction < -360 ) this.direction+=360; // fix weils sonst so viel dreht... ;)
+	this.node.css({
+		left:this.x - 10,
+		top:this.y - 10,
+		transform:'rotate('+this.direction+'deg)'
+	});
+}
+Plane.prototype.flyTo = function(x,y) {
+	var diffX = x-this.x;
+	var diffY = y-this.y;
+	this.alpha = Math.atan2( diffY, diffX );
+	this.speedX = Math.cos(this.alpha) * this.speed;
+	this.speedY = Math.sin(this.alpha) * this.speed;
+	this.setDirection();
+}
+Plane.prototype.setDirection = function() {
+	this.alpha = Math.atan2( this.speedY, this.speedX );
+	var alphaDeg = this.alpha / Math.PI * 180;
+	this.direction =  Math.abs(alphaDeg - this.direction) > 180 ? alphaDeg-360 : alphaDeg;
+}
+Plane.prototype.stop = function() {
+	this.speed = this.speedX = this.speedY = 0;
+}
+
+/*
+
+	Load Page
+
+*/
+var airports = [
+	{x:20,y:20,name:'Wien'},
+	{x:300,y:20,name:'London'},
+	{x:20,y:460,name:'Paris'},
+	{x:300,y:460,name:'Berlin'},
+];
+$( document ).ready(function() {
+	//createPlaces
+	for ( var i in airports ) {
+		$( '<airport>' )
+			.html( airports[i].name[0] )
+			.css({
+				top:airports[i].y - 8,
+				left:airports[i].x - 8,
+			})
+			.appendTo( '#field')
+	}
+
+})
+
+
+/*
+
+	RESET Plane
+
+*/
+var selectedPlane = -1;
+var freeSelection = function() {
+	$('.selected').removeClass('selected');
+	selectedPlane = -1;
+	$( '#status' ).html( 'flying' );
+}
+$( document ).on('click','#field', function(e) {
+	if ( selectedPlane == -1 ) return;
+	var posX = $(this).offset().left, posY = $(this).offset().top;
+	selectedPlane.flyTo((e.pageX - posX),(e.pageY - posY));
+	freeSelection();
+});
+
+
+
+
+	</script>
+	<style>
+	*{ margin:0; padding:0; }
+	body { font:20px Arial; }
+section {	position:fixed;	top:0;	left:0;	right:0;	bottom:0; text-align:center; display:flex; align-items:center; justify-content:center; }
+section > div { max-width:65%; }
+button { font:20px Arial; font-weight:bold; border:none; background:#339900; color:#fff; margin:20px; padding:5px 25px; cursor:pointer; border-radius:15px; }
+#game {	display:none; }
+#game > div { width:324px; }
+#field {	border:2px solid #339900;	width:320px;	height:480px; position:relative; }
+#status.active {
+	animation:textblink 1s linear infinite;
+}
+@keyframes textblink {
+	0% { opacity:1; }
+	50% { opacity:0; }
+	100% { opacity: 1; }
+}
+#logo {	width:45px;	height:45px;}
+#game h1 { font-size:18px; line-height:60px; }
+#game h1 > * { vertical-align:middle; }
+.airplane {	cursor:pointer; transition:transform 0.5s; width:20px;	height:20px;	background:url(black-plane.svg); background-size:20px 20px; position:absolute; z-index:10; top:0;left:0; }
+.airplane.selected { background-image:url(black-plane-red.svg); }
+
+airport { display:inline-block; position:absolute; z-index:1; border:1px solid #000; background:#ccc; width:16px; height:16px; border-radius:50%; font-size:10px;}
+
+	</style>
+</head>
+<body>
+
+<section id="intro">
+	<div>
+		<h1>WIFI Fluglotsen Diplom</h1>
+		<button>Starte Simulation</button>
+	</div>
+</section>
+<section id="game">
+	<div>
+		<h1><img src="airplane-travelling-around-earth.svg" id="logo"> <span>Luftraumsimulation</span></h1>
+		<div id="field">
+
+
+
+		</div>
+		<p>Status: <span id="status"></status></p>
+	<div>
+</section>
+
+
+</body>
+</html>

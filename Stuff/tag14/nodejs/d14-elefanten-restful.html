@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+var webserviceURL = 'http://127.0.0.1:3333/elefanten/';
+
+$( document ).on( 'click', '#b1', function() {
+	$.ajax({
+		url:webserviceURL,
+		type:'GET',
+		success:function(d) { console.log( d ); },
+		error: function() { console.error( arguments ); }
+	});
+});
+
+$( document ).on( 'click', '#b2', function() {
+	$.ajax({
+		url:webserviceURL+'0',
+		type:'GET',
+		success:function(d) { console.log( d ); },
+		error: function() { console.error( arguments ); }
+	});
+});
+
+$( document ).on( 'click', '#b3', function() {
+	$.ajax({
+		url:webserviceURL,
+		type:'POST',
+		data:{name:'Mungo',kg:1500},
+		success:function(d) { console.log( d ); },
+		error: function() { console.error( arguments ); }
+	});
+});
+
+$( document ).on( 'click', '#b4', function() {
+	$.ajax({
+		url:webserviceURL+'0',
+		type:'PUT',
+		data:{name:'Dumbo',kg:2500},
+		success:function(d) { console.log( d ); },
+		error: function() { console.error( arguments ); }
+	});
+});
+
+$( document ).on( 'click', '#b5', function() {
+	$.ajax({
+		url:webserviceURL+'0',
+		type:'DELETE',
+		success:function(d) { console.log( d ); },
+		error: function() { console.error( arguments ); }
+	});
+});
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+<button id="b1">GET ALL</button>
+<button id="b2">GET ONE</button>
+<button id="b3">POST</button>
+<button id="b4">PUT</button>
+<button id="b5">DELETE</button>
+</body>
+</html>
