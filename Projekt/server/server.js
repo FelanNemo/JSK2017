@@ -1,6 +1,6 @@
 /* Mein erster Webserver */
 
-var http = require('http');
+//var http = require('http');
 var fs = require('fs');
 var express = require('express');
 var bp = require('body-parser');
@@ -13,8 +13,9 @@ var server = app.listen(12345, function() {
 });
 
 var files = [
-  {req:'/', file:'index.html'},
-  {req:'/user', file:'user.html'}
+  {req:'/', file:'../index.html'},
+  {req:'/index.html', file:'../index.html'},
+  {req:'/user', file:'../user.html'}
 ];
 
 //console.log(files);
@@ -81,9 +82,12 @@ console.log(req.body);
     if(!err){
       console.log('Datei gefunden');
       res.writeHead(200,{'Content-Type':'application/json'});
+      res.end(JSON.stringify({da: true}))
     } else {
       console.log('Datei nicht gefunden');
-      res.writeHead(500,{'Content-Type':'text/html'});
+      res.writeHead(200,{'Content-Type':'text/html'});
+      res.end(JSON.stringify({da: false}))
+      //$('#countinueGame').attr({ 'disabled':'disabled'});
     }
 
   });
